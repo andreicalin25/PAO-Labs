@@ -123,7 +123,7 @@ public class Library {
         return null;
     }
 
-    //READERS ADD - SHOW - DELETE
+    //READERS ADD - SHOW
     public void addReader(Reader new_r) {
         this.readers.add(new_r);
     }
