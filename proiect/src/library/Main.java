@@ -5,6 +5,7 @@ import library.readers.AdultReader;
 import library.readers.Reader;
 import library.readers.YoungReader;
 
+import javax.swing.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
@@ -365,8 +366,40 @@ public class Main {
 
                 scanner.nextLine();
                 System.out.println("Introduceti numele dumneavoastra:");
+
                 String user_name = scanner.nextLine();
                 Reader reader = my_library.getReaderByName(user_name);
+
+                if (reader == null) {
+                    System.out.println("Nu sunteti inregistrat inca!");
+
+                    System.out.println("Introduceti varsta:");
+                    Integer s2 = scanner.nextInt();
+                    scanner.nextLine();
+
+                    System.out.println("Introduceti numarul de telefon:");
+                    String s3 = scanner.nextLine();
+
+                    System.out.println("Introduceti adresa de mail:");
+                    String s4 = scanner.nextLine();
+
+                    if (s2 >= 16) {
+                        System.out.println("Introduceti ocupatia curenta:");
+                        String s5 = scanner.nextLine();
+
+                        AdultReader r = new AdultReader(user_name, s2, s3, s4, s5);
+                        my_library.addReader(r);
+                    } else {
+                        System.out.println("Introduceti telefonul unui parinte:");
+                        String s5 = scanner.nextLine();
+                        System.out.println("Introduceti mailul unui parinte:");
+                        String s6 = scanner.nextLine();
+
+                        YoungReader r = new YoungReader(user_name, s2, s3, s4, s5, s6);
+                        my_library.addReader(r);
+                        reader = r;
+                    }
+                }
 
                 System.out.println("Buna ziua " + user_name + "!");
 
@@ -406,6 +439,7 @@ public class Main {
                             System.out.println("Din ce sectiune doriti sa imprumutati?");
                             String s1 = scanner.next();
                             Section s = my_library.getSectionByName(s1);
+                            System.out.println(s.getName());
                             if (s == null) {
                                 System.out.println("Nu am gasit aceasta sectiune");
                             } else {
@@ -413,6 +447,7 @@ public class Main {
                                 System.out.println("Cum se numeste cartea pe care doriti sa o imprumutati?");
                                 String aux = scanner.nextLine();
                                 Book b = s.getBookByTitle(aux);
+                                System.out.println(b.getTitle());
                                 if (b == null) {
                                     System.out.println("Nu am gasit aceasta carte");
                                 }
