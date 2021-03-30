@@ -10,10 +10,11 @@
 7. Afisarea tuturor autorilor si a cartilor pe care le-au scris
 8. Afisarea tuturor sectiunilor si a cartilor din fiecare
 9. Afisarea tuturor cartilor in mod detaliat dintr-o sectiune 
-10. un cititor poate sa imprumute o carte noua
-11. un cititor poate sa returneze o carte imprumutata
-12. un cititor poate sa afiseze toate cartile pe care le-a imprumutat
-13. un cititor copil nu poate imprumuta o carte care are continut explicit
+10. Adaugarea unui cititor in bibiloteca
+11. Un cititor poate sa imprumute o carte noua
+12. Un cititor poate sa returneze o carte imprumutata
+13. Un cititor poate sa afiseze toate cartile pe care le-a imprumutat
+14. Un cititor copil nu poate imprumuta o carte care are continut explicit
 
 # Clase folosite
 - Author
