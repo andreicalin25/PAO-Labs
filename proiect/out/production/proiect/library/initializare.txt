@@ -1,0 +1,95 @@
+J.K.Rowling
+31.07.1965
+0
+-
+Rick Riordan
+05.06.1964
+0
+-
+Stan Lee
+28.12.1922
+12.11.2018
+-
+Anne Frank
+12.06.1929
+01.02.1945
+-
+Arthur Conan Doyle
+22.05.1859
+07.07.1930
+-
+Fantasy
+-
+Science
+-
+Nonfiction
+-
+Detective
+-
+novel
+Fantasy
+Harry Potter and the Philosopher's Stone
+332
+1997
+The story of a young boy who finds out he's a wizard
+false
+J.K.Rowling
+third person
+Harry Potter-Hermione Granger-Ron Weasley
+-
+novel
+Fantasy
+Percy Jackson: The Lightning Thief
+377
+2005
+The story of a young boy who finds out he's the son of Poseidon
+false
+Rick Riordan
+first person - Percy
+Percy Jackson-Annabeth Chase
+-
+biography
+Nonfiction
+The Diary of a Young Girl
+283
+1947
+The diary of a girl during The Holocaust
+true
+Anne Frank
+Anne Frank
+-
+novel
+Detective
+A Study in Scarlet
+300
+1887
+The story of an unusual detective
+false
+Arthur Conan Doyle
+first person - Watson
+Sherlock Holmes-Watson
+-
+comicbook
+Fantasy
+Avengers #1
+50
+1963
+Earth's mightiest super-heroes in action!
+false
+Stan Lee
+false
+false
+-
+Calin Andrei
+19
+07.........
+andrei@mail.com
+student
+-
+Rosu Maria
+12
+07.........
+maria@mail.com
+07.........
+mama_maria@mail.com
+-
