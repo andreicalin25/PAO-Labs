@@ -8,9 +8,41 @@ import library.readers.YoungReader;
 import javax.swing.*;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
+
+    public static ArrayList<ArrayList<String>> file_reader(String path) {
+
+        ArrayList<ArrayList<String>> objects = new ArrayList<>();
+
+        try {
+            File file = new File(path);
+            Scanner init = new Scanner(file);
+
+            String k;
+            k = init.nextLine();
+
+            while(k != null) {
+                ArrayList<String> current_obj = new ArrayList<>();
+                current_obj.addAll(Arrays.asList(k.split(",")));
+                objects.add(current_obj);
+
+                if(init.hasNextLine()){
+                    k = init.nextLine();
+                } else {
+                    k = null;
+                }
+
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return objects;
+    }
 
     public static void main(String[] args) {
 
@@ -18,7 +50,7 @@ public class Main {
 
         //initialize library with some values
         try {
-            File file = new File("/Users/andreicalin/Desktop/PAO/proiect/src/library/initializare.txt");
+            File file = new File("/Users/andreicalin/Desktop/PAO/PAO-Labs/proiect/src/library/initializare.txt");
             Scanner init = new Scanner(file);
 
             //add authors
@@ -178,6 +210,15 @@ public class Main {
 //        my_library.showSections();
 //        System.out.println("\n#### Cititori ####");
 //        my_library.showReaders();
+
+        ArrayList<ArrayList<String>> obiecte = new ArrayList<>();
+        obiecte = file_reader("/Users/andreicalin/Desktop/PAO/PAO-Labs/proiect/src/library/input_files/authors.csv");
+        for(ArrayList<String> obiect : obiecte) {
+            for(String data : obiect) {
+                System.out.printf(data + " ");
+            }
+            System.out.printf("\n");
+        }
 
         Scanner scanner = new Scanner(System.in);
         int o1 = 10;
