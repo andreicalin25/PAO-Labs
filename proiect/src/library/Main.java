@@ -14,211 +14,34 @@ import java.util.Scanner;
 
 public class Main {
 
-    public static ArrayList<ArrayList<String>> file_reader(String path) {
 
-        ArrayList<ArrayList<String>> objects = new ArrayList<>();
-
-        try {
-            File file = new File(path);
-            Scanner init = new Scanner(file);
-
-            String k;
-            k = init.nextLine();
-
-            while(k != null) {
-                ArrayList<String> current_obj = new ArrayList<>();
-                current_obj.addAll(Arrays.asList(k.split(",")));
-                objects.add(current_obj);
-
-                if(init.hasNextLine()){
-                    k = init.nextLine();
-                } else {
-                    k = null;
-                }
-
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        return objects;
-    }
 
     public static void main(String[] args) {
+        Reader_Writer reader_writer = new Reader_Writer();
 
         Library my_library = new Library();
 
-        //initialize library with some values
-        try {
-            File file = new File("/Users/andreicalin/Desktop/PAO/PAO-Labs/proiect/src/library/initializare.txt");
-            Scanner init = new Scanner(file);
 
-            //add authors
-            for (int i = 0; i < 5; i++) {
-                String s1, s2, s3;
-                s1 = init.nextLine().trim();
-                s2 = init.nextLine().trim();
-                s3 = init.nextLine().trim();
+        reader_writer.readAuthors(my_library);
+        reader_writer.readSections(my_library);
+        reader_writer.readBooks(my_library);
+        reader_writer.readReaders(my_library);
 
-                if (s3.equals("0")) {
-                    Author a = new Author(s1, s2);
-                    my_library.addAuthor(a);
-                } else {
-                    Author a = new Author(s1, s2, s3);
-                    my_library.addAuthor(a);
-                }
+        System.out.println("##### Autori #####");
+        my_library.showAuthors();
+        System.out.println("\n#### Sectiuni ####");
+        my_library.showSections();
+        System.out.println("\n#### Cititori ####");
+        my_library.showReaders();
 
-                String space = init.nextLine().trim();
-            }
-
-            //add sections
-            for (int i = 0; i < 4; i++) {
-                String s;
-                s = init.nextLine().trim();
-                Section sec = new Section(s);
-                my_library.addSection(sec);
-
-                String space = init.nextLine().trim();
-            }
-
-            //add books
-            for (int i = 0; i < 5; i++) {
-                String type = init.nextLine().trim();
-
-                if (type.equals("novel")) {
-                    String s0 = init.nextLine().trim();
-
-                    String s1 = init.nextLine().trim();
-
-                    String aux2 = init.nextLine();
-                    Integer s2 = Integer.parseInt(aux2);
-
-                    String aux3 = init.nextLine();
-                    Integer s3 = Integer.parseInt(aux3);
-
-                    String s4 = init.nextLine().trim();
-
-                    String aux5 = init.nextLine().trim();
-                    Boolean s5 = Boolean.parseBoolean(aux5);
-
-                    String s6 = init.nextLine().trim();
-
-                    String s7 = init.nextLine().trim();
-                    String[] s8 = init.nextLine().trim().split("-");
-
-                    Section sec = my_library.getSectionByName(s0);
-                    Author a = my_library.getAuthorByName(s6);
-                    Book b = new Novel(s1, s2, s3, s4, s5, a, s7, s8);
-
-                    sec.addBook(b);
-                }
-
-                if (type.equals("biography")) {
-                    String s0 = init.nextLine().trim();
-
-                    String s1 = init.nextLine().trim();
-
-                    String aux2 = init.nextLine();
-                    Integer s2 = Integer.parseInt(aux2);
-
-                    String aux3 = init.nextLine();
-                    Integer s3 = Integer.parseInt(aux3);
-
-                    String s4 = init.nextLine().trim();
-
-                    String aux5 = init.nextLine().trim();
-                    Boolean s5 = Boolean.parseBoolean(aux5);
-
-                    String s6 = init.nextLine().trim();
-
-                    String s7 = init.nextLine().trim();
-
-                    Section sec = my_library.getSectionByName(s0);
-                    Author a = my_library.getAuthorByName(s6);
-                    Book b = new Biography(s1, s2, s3, s4, s5, a, s7);
-
-                    sec.addBook(b);
-                }
-
-                if (type.equals("comicbook")) {
-                    String s0 = init.nextLine().trim();
-
-                    String s1 = init.nextLine().trim();
-
-                    String aux2 = init.nextLine();
-                    Integer s2 = Integer.parseInt(aux2);
-
-                    String aux3 = init.nextLine();
-                    Integer s3 = Integer.parseInt(aux3);
-
-                    String s4 = init.nextLine().trim();
-
-                    String aux5 = init.nextLine().trim();
-                    Boolean s5 = Boolean.parseBoolean(aux5);
-
-                    String s6 = init.nextLine().trim();
-
-                    String aux7 = init.nextLine().trim();
-                    Boolean s7 = Boolean.parseBoolean(aux7);
-
-                    String aux8 = init.nextLine().trim();
-                    Boolean s8 = Boolean.parseBoolean(aux8);
-
-                    Section sec = my_library.getSectionByName(s0);
-                    Author a = my_library.getAuthorByName(s6);
-                    Book b = new ComicBook(s1, s2, s3, s4, s5, a, s7, s8);
-
-                    sec.addBook(b);
-                }
-
-                String space = init.nextLine().trim();
-            }
-
-            //add readers
-            for (int i = 0; i < 2; i++) {
-                String s1 = init.nextLine().trim();
-
-                String aux2 = init.nextLine().trim();
-                Integer s2 = Integer.parseInt(aux2);
-
-                String s3 = init.nextLine().trim();
-
-                String s4 = init.nextLine().trim();
-
-                if (s2 >= 16) {
-                    String s5 = init.nextLine().trim();
-
-                    AdultReader r = new AdultReader(s1, s2, s3, s4, s5);
-                    my_library.addReader(r);
-                } else {
-                    String s5 = init.nextLine().trim();
-                    String s6 = init.nextLine().trim();
-
-                    YoungReader r = new YoungReader(s1, s2, s3, s4, s5, s6);
-                    my_library.addReader(r);
-                }
-
-                String space = init.nextLine().trim();
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-//        System.out.println("##### Autori #####");
-//        my_library.showAuthors();
-//        System.out.println("\n#### Sectiuni ####");
-//        my_library.showSections();
-//        System.out.println("\n#### Cititori ####");
-//        my_library.showReaders();
-
-        ArrayList<ArrayList<String>> obiecte = new ArrayList<>();
-        obiecte = file_reader("/Users/andreicalin/Desktop/PAO/PAO-Labs/proiect/src/library/input_files/authors.csv");
-        for(ArrayList<String> obiect : obiecte) {
-            for(String data : obiect) {
-                System.out.printf(data + " ");
-            }
-            System.out.printf("\n");
-        }
+//        ArrayList<ArrayList<String>> obiecte = new ArrayList<>();
+//        obiecte = file_reader("/Users/andreicalin/Desktop/PAO/PAO-Labs/proiect/src/library/input_files/authors.csv");
+//        for(ArrayList<String> obiect : obiecte) {
+//            for(String data : obiect) {
+//                System.out.printf(data + " ");
+//            }
+//            System.out.printf("\n");
+//        }
 
         Scanner scanner = new Scanner(System.in);
         int o1 = 10;

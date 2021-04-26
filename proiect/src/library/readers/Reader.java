@@ -11,7 +11,7 @@ public abstract class Reader {
     protected String email_address;
     protected ArrayList<Book> borrowed_books;
 
-     abstract public Boolean isUnderAged();
+    abstract public Boolean isUnderAged();
 
     public Reader(String name, Integer age, String phone_number, String email_address) {
         this.name = name;
@@ -19,6 +19,14 @@ public abstract class Reader {
         this.phone_number = phone_number;
         this.email_address = email_address;
         this.borrowed_books = new ArrayList<Book>();
+    }
+
+    public Reader(String name, Integer age, String phone_number, String email_address, ArrayList<Book> borrowed_books) {
+        this.name = name;
+        this.age = age;
+        this.phone_number = phone_number;
+        this.email_address = email_address;
+        this.borrowed_books = borrowed_books;
     }
 
     public String getName() {

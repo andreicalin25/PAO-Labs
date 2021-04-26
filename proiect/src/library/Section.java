@@ -52,7 +52,6 @@ public class Section {
         System.arraycopy(books, 0, new_books, 0, books.length);
         Arrays.sort(new_books);
         books = new_books;
-        System.out.println("Cartea a fost adaugata cu succes!");
     }
 
     public void deleteBook(Book b) {

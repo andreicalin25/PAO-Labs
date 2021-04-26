@@ -142,4 +142,16 @@ public class Library {
         }
         return null;
     }
+
+    //BOOKS GET
+    public Book getBookByName(String name) {
+        for (Section s : sections) {
+            for (Book b : s.getBooks()) {
+                if (b.getTitle().equals(name)) {
+                    return b;
+                }
+            }
+        }
+        return null;
+    }
 }
