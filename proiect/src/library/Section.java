@@ -2,20 +2,21 @@ package library;
 
 import library.books.Book;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Section {
     private String name;
-    private Book[]books;
+    private ArrayList<Book> books;
 
-    public Section(String name, Book[] books) {
+    public Section(String name, ArrayList<Book> books) {
         this.name = name;
         this.books = books;
     }
 
     public Section(String name) {
         this.name = name;
-        this.books = new Book[0];
+        this.books = new ArrayList<Book>();
     }
 
     public String getName() {
@@ -26,11 +27,11 @@ public class Section {
         this.name = name;
     }
 
-    public Book[] getBooks() {
+    public ArrayList<Book> getBooks() {
         return books;
     }
 
-    public void setBooks(Book[] books) {
+    public void setBooks(ArrayList<Book> books) {
         this.books = books;
     }
 
@@ -47,54 +48,15 @@ public class Section {
     }
 
     public void addBook(Book new_b) {
-        Book []new_books = new Book[books.length + 1];
-        new_books[books.length] = new_b;
-        System.arraycopy(books, 0, new_books, 0, books.length);
-        Arrays.sort(new_books);
-        books = new_books;
+        this.books.add(new_b);
     }
 
     public void deleteBook(Book b) {
-        int i;
-
-        for(i=0; i < books.length; i++) {
-            if(books[i].equals(b))
-                break;
-        }
-
-        if (i != books.length) {
-            Book []new_books = new Book[books.length - 1];
-            System.arraycopy(books, 0, new_books, 0, i);
-
-            for(i = i; i < books.length - 1; i++)
-                new_books[i] = books[i+1];
-
-            books = new_books;
-            System.out.println("Cartea a fost eliminata cu succes");
-        }
+        this.books.remove(b);
     }
 
-    public String deleteBook(String b_title) {
-        int i;
-
-        for(i=0; i < books.length; i++) {
-            if(books[i].getTitle().equals(b_title))
-                break;
-        }
-
-        if(i == books.length) {
-            return "Nu am gasit cartea ceruta. Cartea nu se afla in lista sau verificati din nou daca ati scris corect titlul\n";
-        }
-        else {
-            Book []new_books = new Book[books.length - 1];
-            System.arraycopy(books, 0, new_books, 0, i);
-
-            for(i = i; i < books.length - 1; i++)
-                new_books[i] = books[i+1];
-
-            books = new_books;
-            return "Cartea a fost eliminata cu succes";
-        }
+    public void deleteBookByTitle(String b_title) {
+        this.books.remove(getBookByTitle(b_title));
     }
 
     public void showBooks() {
@@ -116,25 +78,7 @@ public class Section {
     }
 
     public void deleteBooksWrittenBy (Author a) {
-
-        int count = 0;
-
-        for(Book b : books) {
-            if(b.getAuthor().equals(a)) {
-                count++;
-            }
-        }
-
-        Book []new_books = new Book[books.length - count];
-
-        int i = 0;
-        for(Book b : books) {
-            if (! b.getAuthor().equals(a)) {
-                new_books[i++] = b;
-            }
-        }
-
-        books = new_books;
+        books.removeIf(b -> b.getAuthor().equals(a));
     }
 
 }
