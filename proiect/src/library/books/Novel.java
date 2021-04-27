@@ -30,4 +30,19 @@ public class Novel extends Book{
     public void setMain_characters(String[] main_characters) {
         this.main_characters = main_characters;
     }
+
+    @Override
+    public String toWrite() {
+
+        String characters = "";
+        for (String ch : main_characters) {
+            characters += ch + '-';
+        }
+
+        String string = "novel," + getTitle() + ',' + getNr_of_pages().toString() + ',' + getPublication_year().toString()
+                + ',' + getInformations() + ',' + getExplicit_content().toString() + ',' + getAuthor().getName()
+                + ',' + narrator + ',' + characters;
+
+        return string;
+    }
 }

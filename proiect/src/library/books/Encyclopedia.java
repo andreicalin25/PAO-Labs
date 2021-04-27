@@ -19,4 +19,14 @@ public class Encyclopedia extends Book{
     public void setSubject(String subject) {
         this.subject = subject;
     }
+
+    @Override
+    public String toWrite() {
+
+        String string = "novel," + getTitle() + ',' + getNr_of_pages().toString() + ',' + getPublication_year().toString()
+                + ',' + getInformations().toString() + ',' + getExplicit_content().toString() + ',' + getAuthor().getName()
+                + ',' + subject;
+
+        return string;
+    }
 }

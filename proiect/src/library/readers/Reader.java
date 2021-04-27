@@ -82,5 +82,7 @@ public abstract class Reader {
     public void returnBook(Book b) {
         borrowed_books.remove(b);
     }
+
+    public abstract String toWrite();
 }
 

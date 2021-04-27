@@ -29,4 +29,14 @@ public class ComicBook extends Book{
     public void setBackwards_reading(Boolean backwards_reading) {
         this.backwards_reading = backwards_reading;
     }
+
+    @Override
+    public String toWrite() {
+
+        String string = "novel," + getTitle() + ',' + getNr_of_pages().toString() + ',' + getPublication_year().toString()
+                + ',' + getInformations() + ',' + getExplicit_content().toString() + ',' + getAuthor().getName()
+                + ',' + black_and_white.toString() + ',' + backwards_reading.toString();
+
+        return string;
+    }
 }

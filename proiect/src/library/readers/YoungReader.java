@@ -39,4 +39,16 @@ public class YoungReader extends Reader {
     public void setParents_email(String parents_email) {
         this.parents_email = parents_email;
     }
+
+    @Override
+    public String toWrite() {
+
+        String string = name + ',' + age.toString() + ',' + phone_number + ',' + email_address + ',' + parents_phone + ',' + parents_email + ',';
+
+        for (Book b : borrowed_books) {
+            string += b.getTitle() + '-';
+        }
+
+        return string;
+    }
 }

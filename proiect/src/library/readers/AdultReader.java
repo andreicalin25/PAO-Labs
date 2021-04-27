@@ -28,4 +28,16 @@ public class AdultReader extends Reader {
     public void setEmployment(String employment) {
         this.employment = employment;
     }
+
+    @Override
+    public String toWrite() {
+
+        String string = name + ',' + age.toString() + ',' + phone_number + ',' + email_address + ',' + employment + ',';
+
+        for (Book b : borrowed_books) {
+            string += b.getTitle() + '-';
+        }
+
+        return string;
+    }
 }

@@ -95,4 +95,11 @@ public class Book implements Comparable<Book>{
                 ", " + publication_year +
                 ", " + informations;
     }
+
+    public String toWrite() {
+        String string = title + ',' + nr_of_pages.toString() + ',' + publication_year.toString() + ','
+                + informations + ',' + explicit_content.toString() + ',' + author.getName();
+
+        return string;
+    }
 }

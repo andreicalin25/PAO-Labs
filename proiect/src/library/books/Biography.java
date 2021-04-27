@@ -20,4 +20,14 @@ public class Biography extends Book{
     public void setPerson(String person) {
         this.person = person;
     }
+
+    @Override
+    public String toWrite() {
+
+        String string = "novel," + getTitle() + ',' + getNr_of_pages().toString() + ',' + getPublication_year().toString()
+                + ',' + getInformations().toString() + ',' + getExplicit_content().toString() + ',' + getAuthor().getName()
+                + ',' + person;
+
+        return string;
+    }
 }

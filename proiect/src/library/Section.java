@@ -81,4 +81,8 @@ public class Section {
         books.removeIf(b -> b.getAuthor().equals(a));
     }
 
+    public String toWrite() {
+        return name;
+    }
+
 }

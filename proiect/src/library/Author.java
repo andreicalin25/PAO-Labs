@@ -60,4 +60,16 @@ public class Author {
     public int hashCode() {
         return Objects.hash(getName(), getDate_of_birth(), getDate_of_death());
     }
+
+    public String toWrite() {
+        String string = name + ',' + date_of_birth + ',';
+
+        if(date_of_death == null) {
+            string += '0';
+        } else {
+            string += date_of_death;
+        }
+
+        return string;
+    }
 }
