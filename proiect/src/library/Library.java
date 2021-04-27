@@ -83,6 +83,14 @@ public class Library {
         return null;
     }
 
+    public Section getSectionByBook(Book b) {
+        for (Section s : sections) {
+            if (s.getBooks().contains(b))
+                return s;
+        }
+        return null;
+    }
+
     //AUTHORS ADD - SHOW - DELETE
     public void addAuthor(Author new_a) {
         this.authors.add(new_a);

@@ -6,10 +6,13 @@ import library.readers.Reader;
 import library.readers.YoungReader;
 
 import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
+import java.io.IOException;
+
 
 public class Reader_Writer {
 
@@ -24,27 +27,42 @@ public class Reader_Writer {
             String k;
             k = init.nextLine();
 
-            while(k != null) {
+            while (k != null) {
                 ArrayList<String> current_obj = new ArrayList<>();
                 current_obj.addAll(Arrays.asList(k.split(",")));
                 objects.add(current_obj);
 
-                if(init.hasNextLine()){
+                if (init.hasNextLine()) {
                     k = init.nextLine();
                 } else {
                     k = null;
                 }
 
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+        }catch (IOException e) {
+                System.out.println("An error occurred.");
+                e.printStackTrace();
         }
 
         return objects;
     }
 
+    public void fileWriter(String path, String string) {
+
+        try {
+            FileWriter file = new FileWriter(path);
+            file.write(string);
+            file.close();
+
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+    }
+
     public void readAuthors(Library my_library) {
-        String path = "/Users/andreicalin/Desktop/PAO/PAO-Labs/proiect/src/library/input_files/authors.csv";
+        String path = String.valueOf(Path.of("proiect").toAbsolutePath());
+        path += "/src/library/files/authors.csv";
 
         for(ArrayList<String> author_string : fileReader(path)) {
             String name = author_string.get(0);
@@ -62,7 +80,8 @@ public class Reader_Writer {
     }
 
     public void readSections(Library my_library) {
-        String path = "/Users/andreicalin/Desktop/PAO/PAO-Labs/proiect/src/library/input_files/sections.csv";
+        String path = String.valueOf(Path.of("proiect").toAbsolutePath());
+        path += "/src/library/files/sections.csv";
 
         for(ArrayList<String> section_string : fileReader(path)) {
             Section sec = new Section(section_string.get(0));
@@ -71,7 +90,8 @@ public class Reader_Writer {
     }
 
     public void readBooks(Library my_library) {
-        String path = "/Users/andreicalin/Desktop/PAO/PAO-Labs/proiect/src/library/input_files/books.csv";
+        String path = String.valueOf(Path.of("proiect").toAbsolutePath());
+        path += "/src/library/files/books.csv";
 
         for(ArrayList<String> book_string : fileReader(path)) {
             if (book_string.get(0).equals("novel")) {
@@ -87,7 +107,7 @@ public class Reader_Writer {
 
                 Section sec = my_library.getSectionByName(section);
                 Author aut = my_library.getAuthorByName(author);
-                Book b = new Novel(title, pages, year, info, explicit, aut, narrator, characters);
+                Book b = new Novel(title, pages, year, info, explicit, aut, sec, narrator, characters);
 
                 sec.addBook(b);
             }
@@ -103,7 +123,7 @@ public class Reader_Writer {
 
                 Section sec = my_library.getSectionByName(section);
                 Author aut = my_library.getAuthorByName(author);
-                Book b = new Biography(title, pages, year, info, explicit, aut, character);
+                Book b = new Biography(title, pages, year, info, explicit, aut, sec, character);
 
                 sec.addBook(b);
             }
@@ -120,7 +140,7 @@ public class Reader_Writer {
 
                 Section sec = my_library.getSectionByName(section);
                 Author aut = my_library.getAuthorByName(author);
-                Book b = new ComicBook(title, pages, year, info, explicit, aut, b_w, back);
+                Book b = new ComicBook(title, pages, year, info, explicit, aut, sec, b_w, back);
 
                 sec.addBook(b);
             }
@@ -136,7 +156,7 @@ public class Reader_Writer {
 
                 Section sec = my_library.getSectionByName(section);
                 Author aut = my_library.getAuthorByName(author);
-                Book b = new Encyclopedia(title, pages, year, info, explicit, aut, subject);
+                Book b = new Encyclopedia(title, pages, year, info, explicit, aut, sec, subject);
 
                 sec.addBook(b);
             }
@@ -144,7 +164,8 @@ public class Reader_Writer {
     }
 
     public void readReaders(Library my_library) {
-        String path = "/Users/andreicalin/Desktop/PAO/PAO-Labs/proiect/src/library/input_files/readers.csv";
+        String path = String.valueOf(Path.of("proiect").toAbsolutePath());
+        path += "/src/library/files/readers.csv";
 
         for(ArrayList<String> reader_string : fileReader(path)) {
             String name = reader_string.get(0);
@@ -196,4 +217,65 @@ public class Reader_Writer {
         }
     }
 
+    public void writeAuthors(Library my_library) {
+        String path = String.valueOf(Path.of("proiect").toAbsolutePath());
+        path += "/src/library/files/authors.csv";
+
+        String string = "";
+        for (Author a : my_library.getAuthors()) {
+            string += a.toWrite() + '\n';
+        }
+
+        //fac acest strip pentru a scoate \n care se afla in coada si care imi genereaza un rand in plus in fisier
+        string = string.substring(0, string.length() - 1);
+
+        fileWriter(path, string);
+    }
+
+    public void writeBooks(Library my_library) {
+        String path = String.valueOf(Path.of("proiect").toAbsolutePath());
+        path += "/src/library/files/books.csv";
+
+        String string = "";
+        for (Section s : my_library.getSections()) {
+            for(Book b : s.getBooks()) {
+                string += b.toWrite() + '\n';
+            }
+        }
+
+        //fac acest strip pentru a scoate \n care se afla in coada si care imi genereaza un rand in plus in fisier
+        string = string.substring(0, string.length() - 1);
+
+        fileWriter(path, string);
+    }
+
+    public void writeSections(Library my_library) {
+        String path = String.valueOf(Path.of("proiect").toAbsolutePath());
+        path += "/src/library/files/sections.csv";
+
+        String string = "";
+        for (Section s : my_library.getSections()) {
+            string += s.toWrite() + '\n';
+        }
+
+        //fac acest strip pentru a scoate \n care se afla in coada si care imi genereaza un rand in plus in fisier
+        string = string.substring(0, string.length() - 1);
+
+        fileWriter(path, string);
+    }
+
+    public void writeReaders(Library my_library) {
+        String path = String.valueOf(Path.of("proiect").toAbsolutePath());
+        path += "/src/library/files/readers.csv";
+
+        String string = "";
+        for (Reader r : my_library.getReaders()) {
+            string += r.toWrite() + '\n';
+        }
+
+        //fac acest strip pentru a scoate ultimul \n care se afla in coada si care imi genereaza un rand in plus in fisier
+        string = string.substring(0, string.length() - 1);
+
+        fileWriter(path, string);
+    }
 }

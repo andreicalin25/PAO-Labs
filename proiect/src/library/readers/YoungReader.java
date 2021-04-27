@@ -43,12 +43,19 @@ public class YoungReader extends Reader {
     @Override
     public String toWrite() {
 
-        String string = name + ',' + age.toString() + ',' + phone_number + ',' + email_address + ',' + parents_phone + ',' + parents_email + ',';
+        String string = name + ',' + age.toString() + ',' + phone_number + ',' + email_address + ',' + parents_phone + ',' + parents_email;
 
-        for (Book b : borrowed_books) {
-            string += b.getTitle() + '-';
+        if(!borrowed_books.isEmpty()) {
+            string += ',';
+
+            for (Book b : borrowed_books) {
+                if(b.equals(borrowed_books.get(borrowed_books.size() - 1))) {
+                    string += b.getTitle();
+                } else {
+                    string += b.getTitle() + '-';
+                }
+            }
         }
-
         return string;
     }
 }

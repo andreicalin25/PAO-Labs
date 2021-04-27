@@ -8,6 +8,7 @@ import library.readers.YoungReader;
 import javax.swing.*;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
@@ -172,14 +173,14 @@ public class Main {
                                     System.out.println("Cine sunt personajele principale? (vor fi separate prin ele folosind -)");
                                     String[] e8 = scanner.nextLine().split("-");
 
-                                    Book b = new Novel(e1, e2, e3, e4, e5, e6, e7, e8);
+                                    Book b = new Novel(e1, e2, e3, e4, e5, e6, s, e7, e8);
                                     s.addBook(b);
 
                                 } else if (option == 2) {
                                     System.out.println("Despre cine este vorba in biografie?");
                                     String e7 = scanner.nextLine();
 
-                                    Book b = new Biography(e1, e2, e3, e4, e5, e6, e7);
+                                    Book b = new Biography(e1, e2, e3, e4, e5, e6, s, e7);
                                     s.addBook(b);
 
                                 } else if (option == 3) {
@@ -188,14 +189,14 @@ public class Main {
                                     System.out.println("Se citeste invers? true/false");
                                     Boolean e8 = scanner.nextBoolean();
 
-                                    Book b = new ComicBook(e1, e2, e3, e4, e5, e6, e7, e8);
+                                    Book b = new ComicBook(e1, e2, e3, e4, e5, e6, s, e7, e8);
                                     s.addBook(b);
 
                                 } else if (option == 4) {
                                     System.out.println("Ce subiect aprofundeaza?");
                                     String e7 = scanner.next();
 
-                                    Book b = new Encyclopedia(e1, e2, e3, e4, e5, e6, e7);
+                                    Book b = new Encyclopedia(e1, e2, e3, e4, e5, e6, s, e7);
                                     s.addBook(b);
                                 }
 
@@ -355,6 +356,12 @@ public class Main {
                             System.out.println("");
                     }
                 }
+            }
+            else {
+                reader_writer.writeAuthors(my_library);
+                reader_writer.writeBooks(my_library);
+                reader_writer.writeSections(my_library);
+                reader_writer.writeReaders(my_library);
             }
 
         }
