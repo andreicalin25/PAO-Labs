@@ -18,7 +18,7 @@ public class UserOperations {
     static DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
     LocalDateTime now;
 
-    void addAuthor(Library my_library, Scanner scanner) {
+    public void addAuthor(Library my_library, Scanner scanner) {
         System.out.println("Cum se numeste autorul?");
         String s1 = scanner.next();
         System.out.println("Pe ce data s-a nascut autorul?");
@@ -38,7 +38,7 @@ public class UserOperations {
         reader_writer.fileWriter(path, "author added," + dtf.format(now) + '\n');
     }
 
-    void deleteAuthor(Library my_library, Scanner scanner) {
+    public void deleteAuthor(Library my_library, Scanner scanner) {
         scanner.nextLine();
         System.out.println("Cum se numeste autorul?");
         String s1 = scanner.nextLine();
@@ -53,14 +53,14 @@ public class UserOperations {
         reader_writer.fileWriter(path, "author deleted," + dtf.format(now) + '\n');
     }
 
-    void showAuthors(Library my_library) {
+    public void showAuthors(Library my_library) {
         my_library.showAuthors();
 
         now = LocalDateTime.now();
         reader_writer.fileWriter(path, "authors shown," + dtf.format(now) + '\n');
     }
 
-    void addSection(Library my_library, Scanner scanner) {
+    public void addSection(Library my_library, Scanner scanner) {
         System.out.println("Cum se va numi noua sectiune?");
         String s1 = scanner.next();
         Section s = new Section(s1);
@@ -70,7 +70,7 @@ public class UserOperations {
         reader_writer.fileWriter(path, "section added," + dtf.format(now) + '\n');
     }
 
-    void deleteSection(Library my_library, Scanner scanner) {
+    public void deleteSection(Library my_library, Scanner scanner) {
         System.out.println("Cum se numeste sectiunea?");
         String s1 = scanner.next();
         Section s = my_library.getSectionByName(s1);
@@ -84,14 +84,14 @@ public class UserOperations {
         reader_writer.fileWriter(path, "section deleted," + dtf.format(now) + '\n');
     }
 
-    void showSections(Library my_library) {
+    public void showSections(Library my_library) {
         my_library.showSections();
 
         now = LocalDateTime.now();
         reader_writer.fileWriter(path, "all sections shown," + dtf.format(now) + '\n');
     }
 
-    void showSectionBooks(Library my_library, Scanner scanner) {
+    public void showSectionBooks(Library my_library, Scanner scanner) {
         System.out.println("Cum se numeste sectiunea?");
         String s1 = scanner.next();
         Section s = my_library.getSectionByName(s1);
@@ -105,7 +105,7 @@ public class UserOperations {
         reader_writer.fileWriter(path, "section shown," + dtf.format(now) + '\n');
     }
 
-    void addBook(Library my_library, Scanner scanner) {
+    public void addBook(Library my_library, Scanner scanner) {
 
         System.out.println("Din ce sectiune va face parte cartea?");
         String s1 = scanner.next();
@@ -172,7 +172,7 @@ public class UserOperations {
         reader_writer.fileWriter(path, "book added," + dtf.format(now) + '\n');
     }
 
-    void deleteBook(Library my_library, Scanner scanner) {
+    public void deleteBook(Library my_library, Scanner scanner) {
         System.out.println("Din ce sectiune este cartea pe care vreti sa o stergeti?");
         String s1 = scanner.next();
         scanner.nextLine();
@@ -194,7 +194,7 @@ public class UserOperations {
         reader_writer.fileWriter(path, "book deleted," + dtf.format(now) + '\n');
     }
 
-    void borrowBook(Library my_library, Scanner scanner, Reader reader) {
+    public void borrowBook(Library my_library, Scanner scanner, Reader reader) {
         System.out.println("Din ce sectiune doriti sa imprumutati?");
         String s1 = scanner.next();
         Section s = my_library.getSectionByName(s1);
@@ -223,7 +223,7 @@ public class UserOperations {
         reader_writer.fileWriter(path, "book borrowed," + dtf.format(now) + '\n');
     }
 
-    void returnBook(Library my_library, Scanner scanner, Reader reader) {
+    public void returnBook(Library my_library, Scanner scanner, Reader reader) {
         System.out.println("Din ce sectiune este cartea pe care doriti sa o returnati?");
         String s1 = scanner.next();
         Section s = my_library.getSectionByName(s1);
@@ -245,7 +245,7 @@ public class UserOperations {
         reader_writer.fileWriter(path, "book returned," + dtf.format(now) + '\n');
     }
 
-    void showBorrowedBooks(Reader reader) {
+    public void showBorrowedBooks(Reader reader) {
         for(String s : reader.getBorrowed_books()) {
             System.out.println(s);
         }
@@ -254,7 +254,7 @@ public class UserOperations {
         reader_writer.fileWriter(path, "borrowed books shown," + dtf.format(now) + '\n');
     }
 
-    Reader login(Library my_library, Scanner scanner) {
+    public Reader login(Library my_library, Scanner scanner) {
         scanner.nextLine();
         System.out.println("Introduceti numele dumneavoastra:");
 
