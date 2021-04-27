@@ -9,16 +9,14 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 import java.util.Scanner;
-import java.io.FileWriter;
 import java.nio.file.Path;
 
 public class UserOperations {
 
     static Reader_Writer reader_writer = new Reader_Writer();
-    static String path = String.valueOf(Path.of("proiect").toAbsolutePath()) + "/src/library/files/audit.csv";
+    static String path = Path.of("proiect").toAbsolutePath() + "/src/library/files/audit.csv";
     static DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
     LocalDateTime now;
-
 
     void addAuthor(Library my_library, Scanner scanner) {
         System.out.println("Cum se numeste autorul?");
@@ -45,7 +43,7 @@ public class UserOperations {
         System.out.println("Cum se numeste autorul?");
         String s1 = scanner.nextLine();
         Author a = my_library.getAuthorByName(s1);
-        if (a == null) {
+        if (Objects.isNull(a)) {
             System.out.println("Nu am gasit acest autor");
         } else {
             my_library.deleteAuthor(a);
@@ -76,7 +74,7 @@ public class UserOperations {
         System.out.println("Cum se numeste sectiunea?");
         String s1 = scanner.next();
         Section s = my_library.getSectionByName(s1);
-        if (s == null) {
+        if (Objects.isNull(s)) {
             System.out.println("Nu am gasit aceasta sectiune");
         } else {
             my_library.deleteSection(s);
@@ -97,7 +95,7 @@ public class UserOperations {
         System.out.println("Cum se numeste sectiunea?");
         String s1 = scanner.next();
         Section s = my_library.getSectionByName(s1);
-        if (s == null) {
+        if (Objects.isNull(s)) {
             System.out.println("Nu am gasit aceasta sectiune");
         } else {
             my_library.showSection(s);
@@ -113,7 +111,7 @@ public class UserOperations {
         String s1 = scanner.next();
         scanner.nextLine();
         Section s = my_library.getSectionByName(s1);
-        if (s == null) {
+        if (Objects.isNull(s)) {
             System.out.println("Nu am gasit aceasta sectiune");
         } else {
             System.out.println("Cum se numeste cartea?");
@@ -179,7 +177,7 @@ public class UserOperations {
         String s1 = scanner.next();
         scanner.nextLine();
         Section s = my_library.getSectionByName(s1);
-        if (s == null) {
+        if (Objects.isNull(s)) {
             System.out.println("Nu am gasit aceasta sectiune");
         } else {
             System.out.println("Cum se numeste cartea pe care vreti sa o stergeti?");
@@ -200,16 +198,15 @@ public class UserOperations {
         System.out.println("Din ce sectiune doriti sa imprumutati?");
         String s1 = scanner.next();
         Section s = my_library.getSectionByName(s1);
-        System.out.println(s.getName());
-        if (s == null) {
+
+        if (Objects.isNull(s)) {
             System.out.println("Nu am gasit aceasta sectiune");
         } else {
             scanner.nextLine();
             System.out.println("Cum se numeste cartea pe care doriti sa o imprumutati?");
             String aux = scanner.nextLine();
             Book b = s.getBookByTitle(aux);
-            System.out.println(b.getTitle());
-            if (b == null) {
+            if (Objects.isNull(b)) {
                 System.out.println("Nu am gasit aceasta carte");
             }
             else {
@@ -230,7 +227,7 @@ public class UserOperations {
         System.out.println("Din ce sectiune este cartea pe care doriti sa o returnati?");
         String s1 = scanner.next();
         Section s = my_library.getSectionByName(s1);
-        if (s == null) {
+        if (Objects.isNull(s)) {
             System.out.println("Nu am gasit aceasta sectiune");
         } else {
             scanner.nextLine();
@@ -262,12 +259,9 @@ public class UserOperations {
         System.out.println("Introduceti numele dumneavoastra:");
 
         String user_name = scanner.nextLine();
-        System.out.println(user_name);
         Reader reader = my_library.getReaderByName(user_name);
-        System.out.println(reader);
 
         if (Objects.isNull(reader)) {
-            System.out.println("AAAA");
             System.out.println("Nu sunteti inregistrat inca!");
 
             System.out.println("Introduceti varsta:");
@@ -301,7 +295,6 @@ public class UserOperations {
         now = LocalDateTime.now();
         reader_writer.fileWriter(path, "user logged in," + dtf.format(now) + '\n');
 
-        System.out.println("BBB");
         return reader;
     }
 }
