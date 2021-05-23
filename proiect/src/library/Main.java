@@ -4,6 +4,7 @@ import library.books.*;
 import library.readers.AdultReader;
 import library.readers.Reader;
 import library.readers.YoungReader;
+import library.repository.AuthorRepository;
 
 import javax.swing.*;
 import java.io.File;
@@ -28,17 +29,30 @@ public class Main {
         reader_writer.readBooks(my_library);
         reader_writer.readReaders(my_library);
 
-        System.out.println("##### Autori #####");
-        my_library.showAuthors();
-        System.out.println("\n#### Sectiuni ####");
-        my_library.showSections();
-        System.out.println("\n#### Cititori ####");
-        my_library.showReaders();
+//        System.out.println("##### Autori #####");
+//        my_library.showAuthors();
+//        System.out.println("\n#### Sectiuni ####");
+//        my_library.showSections();
+//        System.out.println("\n#### Cititori ####");
+//        my_library.showReaders();
 
 
-        Scanner scanner = new Scanner(System.in);
-        int o1 = 10;
+//        Scanner scanner = new Scanner(System.in);
+//        int o1 = 10;
 
+        //TEST
+
+        AuthorRepository authorRepository = new AuthorRepository();
+        authorRepository.createTable();
+//        for(Author a : my_library.getAuthors()) {
+//            authorRepository.insertAuthor(a.getName(), a.getDate_of_birth(), a.getDate_of_death());
+//        }
+        for (int i =6; i<=25; i++) {
+            authorRepository.deleteAuthorById(i);
+        }
+        authorRepository.displayAuthors();
+
+/*
         while (o1 != 0) {
             System.out.println("Bine ai venit in biblioteca noastra!\nVa rugam sa selectati una din cele trei optiuni:\n1 - admin\n2 - user\n0 - iesi");
 
@@ -161,6 +175,6 @@ public class Main {
             }
 
         }
-
+*/
     }
 }
