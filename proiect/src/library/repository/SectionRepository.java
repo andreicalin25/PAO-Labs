@@ -1,17 +1,16 @@
 package library.repository;
 
-import library.Author;
+import library.Section;
 import library.config.DatabaseConfiguration;
 
 import java.sql.*;
 
 
-public class AuthorRepository {
+public class SectionRepository {
 
     public void createTable() {
-        String createTableSql = "CREATE TABLE IF NOT EXISTS authors" +
-                "(id int PRIMARY KEY AUTO_INCREMENT, name varchar(30)," +
-                "date_of_birth varchar(12), date_of_death varchar(12))";
+        String createTableSql = "CREATE TABLE IF NOT EXISTS sections" +
+                "(id int PRIMARY KEY AUTO_INCREMENT, name varchar(30))";
 
         Connection connection = DatabaseConfiguration.getDatabaseConnection();
 
@@ -23,16 +22,14 @@ public class AuthorRepository {
         }
     }
 
-    public void addAuthor(Author a) {
-        String insertAuthorSql = "INSERT INTO authors(name, date_of_birth, date_of_death) VALUES(?, ?, ?)";
+    public void addSection(Section s) {
+        String insertAuthorSql = "INSERT INTO sections(name) VALUES(?)";
 
         Connection connection = DatabaseConfiguration.getDatabaseConnection();
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(insertAuthorSql);
-            preparedStatement.setString(1, a.getName());
-            preparedStatement.setString(2, a.getDate_of_birth());
-            preparedStatement.setString(3, a.getDate_of_death());
+            preparedStatement.setString(1, s.getName());
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -40,8 +37,8 @@ public class AuthorRepository {
         }
     }
 
-    public Author getAuthorByName(String name) {
-        String selectSql = "SELECT * FROM authors WHERE name=?";
+    public Section getSectionByName(String name) {
+        String selectSql = "SELECT * FROM sections WHERE name=?";
 
         Connection connection = DatabaseConfiguration.getDatabaseConnection();
         try {
@@ -49,21 +46,21 @@ public class AuthorRepository {
             preparedStatement.setString(1, name);
 
             ResultSet resultSet = preparedStatement.executeQuery();
-            return mapToAuthor(resultSet);
+            return mapToSection(resultSet);
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return null;
     }
 
-    public void updateAuthorName(String name, Author a) {
-        String updateNameSql = "UPDATE authors SET name=? WHERE name=?";
+    public void updateSectionName(String name, Section s) {
+        String updateNameSql = "UPDATE sections SET name=? WHERE name=?";
 
         Connection connection = DatabaseConfiguration.getDatabaseConnection();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(updateNameSql);
             preparedStatement.setString(1, name);
-            preparedStatement.setString(2, a.getName());
+            preparedStatement.setString(2, s.getName());
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -71,29 +68,54 @@ public class AuthorRepository {
         }
     }
 
-    public void deleteAuthor(Author a) {
-        String updateNameSql = "DELETE FROM authors  WHERE name=?";
+    public void deleteSection(Section s) {
+        String updateNameSql = "DELETE FROM sections WHERE name=?";
 
         Connection connection = DatabaseConfiguration.getDatabaseConnection();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(updateNameSql);
-            preparedStatement.setString(1, a.getName());
+            preparedStatement.setString(1, s.getName());
 
             preparedStatement.executeUpdate();
+
+
+            //stergere carti
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    private Author mapToAuthor(ResultSet resultSet) throws SQLException {
+    private Section mapToSection(ResultSet resultSet) throws SQLException {
         if (resultSet.next()) {
-            return new Author(resultSet.getString(1), resultSet.getString(2), resultSet.getString(3));
+            return new Section(resultSet.getString(1));
         }
         return null;
     }
 
-    public void displayAuthors() {
-        String selectSql = "SELECT * FROM authors";
+    public void displaySection(Section s) {
+        String selectSql = "SELECT * FROM sections WHERE name=?";
+
+        Connection connection = DatabaseConfiguration.getDatabaseConnection();
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(selectSql);
+            preparedStatement.setString(1, s.getName());
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            System.out.println("Name: " + resultSet.getString(1));
+
+            // afisare carti
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void displaySections() {
+        String selectSql = "SELECT * FROM sections";
 
         Connection connection = DatabaseConfiguration.getDatabaseConnection();
 
@@ -101,10 +123,11 @@ public class AuthorRepository {
             Statement stmt = connection.createStatement();
             ResultSet resultSet = stmt.executeQuery(selectSql);
             while (resultSet.next()) {
-                System.out.println("Id:" + resultSet.getString(1));
-                System.out.println("Name:" + resultSet.getString(2));
-                System.out.println("Date of birth:" + resultSet.getString(3));
-                System.out.println("Date of death:" + resultSet.getString(4));
+                System.out.print("Id: " + resultSet.getString(1));
+                System.out.println(", Name: " + resultSet.getString(2));
+
+                //afisare titluri
+
             }
 
         } catch (SQLException e) {

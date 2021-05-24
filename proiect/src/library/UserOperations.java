@@ -4,6 +4,8 @@ import library.books.*;
 import library.readers.AdultReader;
 import library.readers.Reader;
 import library.readers.YoungReader;
+import library.repository.AuthorRepository;
+import library.repository.SectionRepository;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -18,7 +20,8 @@ public class UserOperations {
     static DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
     LocalDateTime now;
 
-    public void addAuthor(Library my_library, Scanner scanner) {
+    /// AUTHORS
+    public void addAuthor(AuthorRepository authorRepository, Scanner scanner) {
         System.out.println("Cum se numeste autorul?");
         String s1 = scanner.next();
         System.out.println("Pe ce data s-a nascut autorul?");
@@ -27,84 +30,87 @@ public class UserOperations {
         String s3 = scanner.next();
 
         if (s3.equals("0")) {
-            Author a = new Author(s1, s2);
-            my_library.addAuthor(a);
+            Author a = new Author(s1, s2, null);
+            authorRepository.addAuthor(a);
         } else {
             Author a = new Author(s1, s2, s3);
-            my_library.addAuthor(a);
+            authorRepository.addAuthor(a);
         }
 
         now = LocalDateTime.now();
         reader_writer.fileWriter(path, "author added," + dtf.format(now) + '\n');
     }
 
-    public void deleteAuthor(Library my_library, Scanner scanner) {
+    public void deleteAuthor(AuthorRepository authorRepository, Scanner scanner) {
         scanner.nextLine();
         System.out.println("Cum se numeste autorul?");
         String s1 = scanner.nextLine();
-        Author a = my_library.getAuthorByName(s1);
+        Author a = authorRepository.getAuthorByName(s1);
         if (Objects.isNull(a)) {
             System.out.println("Nu am gasit acest autor");
         } else {
-            my_library.deleteAuthor(a);
+            authorRepository.deleteAuthor(a);
         }
 
         now = LocalDateTime.now();
         reader_writer.fileWriter(path, "author deleted," + dtf.format(now) + '\n');
     }
 
-    public void showAuthors(Library my_library) {
-        my_library.showAuthors();
+    public void showAuthors(AuthorRepository authorRepository) {
+        authorRepository.displayAuthors();
 
         now = LocalDateTime.now();
         reader_writer.fileWriter(path, "authors shown," + dtf.format(now) + '\n');
     }
 
-    public void addSection(Library my_library, Scanner scanner) {
+
+    ///SECTIONS
+    public void addSection(SectionRepository sectionRepository, Scanner scanner) {
         System.out.println("Cum se va numi noua sectiune?");
         String s1 = scanner.next();
         Section s = new Section(s1);
-        my_library.addSection(s);
+        sectionRepository.addSection(s);
 
         now = LocalDateTime.now();
         reader_writer.fileWriter(path, "section added," + dtf.format(now) + '\n');
     }
 
-    public void deleteSection(Library my_library, Scanner scanner) {
+    public void deleteSection(SectionRepository sectionRepository, Scanner scanner) {
         System.out.println("Cum se numeste sectiunea?");
         String s1 = scanner.next();
-        Section s = my_library.getSectionByName(s1);
+        Section s = sectionRepository.getSectionByName(s1);
         if (Objects.isNull(s)) {
             System.out.println("Nu am gasit aceasta sectiune");
         } else {
-            my_library.deleteSection(s);
+            sectionRepository.deleteSection(s);
         }
 
         now = LocalDateTime.now();
         reader_writer.fileWriter(path, "section deleted," + dtf.format(now) + '\n');
     }
 
-    public void showSections(Library my_library) {
-        my_library.showSections();
+    public void showSections(SectionRepository sectionRepository) {
+        sectionRepository.displaySections();
 
         now = LocalDateTime.now();
         reader_writer.fileWriter(path, "all sections shown," + dtf.format(now) + '\n');
     }
 
-    public void showSectionBooks(Library my_library, Scanner scanner) {
+    public void showSectionBooks(SectionRepository sectionRepository, Scanner scanner) {
         System.out.println("Cum se numeste sectiunea?");
         String s1 = scanner.next();
-        Section s = my_library.getSectionByName(s1);
+        Section s = sectionRepository.getSectionByName(s1);
         if (Objects.isNull(s)) {
             System.out.println("Nu am gasit aceasta sectiune");
         } else {
-            my_library.showSection(s);
+            sectionRepository.displaySection(s);
         }
 
         now = LocalDateTime.now();
         reader_writer.fileWriter(path, "section shown," + dtf.format(now) + '\n');
     }
 
+    ///BOOKS
     public void addBook(Library my_library, Scanner scanner) {
 
         System.out.println("Din ce sectiune va face parte cartea?");

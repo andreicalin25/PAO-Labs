@@ -92,9 +92,6 @@ public class Library {
     }
 
     //AUTHORS ADD - SHOW - DELETE
-    public void addAuthor(Author new_a) {
-        this.authors.add(new_a);
-    }
 
     public void deleteAuthor(Author deleted_a) {
 

@@ -60,24 +60,24 @@ public class Reader_Writer {
         }
     }
 
-    public void readAuthors(Library my_library) {
-        String path = String.valueOf(Path.of("proiect").toAbsolutePath());
-        path += "/src/library/files/authors.csv";
-
-        for(ArrayList<String> author_string : fileReader(path)) {
-            String name = author_string.get(0);
-            String birth = author_string.get(1);
-            String death = author_string.get(2);
-
-            if(death.equals("0")) {
-                Author a = new Author(name, birth);
-                my_library.addAuthor(a);
-            } else {
-                Author a = new Author(name, birth, death);
-                my_library.addAuthor(a);
-            }
-        }
-    }
+//    public void readAuthors(Library my_library) {
+//        String path = String.valueOf(Path.of("proiect").toAbsolutePath());
+//        path += "/src/library/files/authors.csv";
+//
+//        for(ArrayList<String> author_string : fileReader(path)) {
+//            String name = author_string.get(0);
+//            String birth = author_string.get(1);
+//            String death = author_string.get(2);
+//
+//            if(death.equals("0")) {
+//                Author a = new Author(name, birth);
+//                my_library.addAuthor(a);
+//            } else {
+//                Author a = new Author(name, birth, death);
+//                my_library.addAuthor(a);
+//            }
+//        }
+//    }
 
     public void readSections(Library my_library) {
         String path = String.valueOf(Path.of("proiect").toAbsolutePath());

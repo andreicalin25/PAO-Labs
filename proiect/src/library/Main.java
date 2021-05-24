@@ -5,6 +5,7 @@ import library.readers.AdultReader;
 import library.readers.Reader;
 import library.readers.YoungReader;
 import library.repository.AuthorRepository;
+import library.repository.SectionRepository;
 
 import javax.swing.*;
 import java.io.File;
@@ -24,7 +25,7 @@ public class Main {
         Library my_library = new Library();
 
 
-        reader_writer.readAuthors(my_library);
+//        reader_writer.readAuthors(my_library);
         reader_writer.readSections(my_library);
         reader_writer.readBooks(my_library);
         reader_writer.readReaders(my_library);
@@ -37,22 +38,32 @@ public class Main {
 //        my_library.showReaders();
 
 
-//        Scanner scanner = new Scanner(System.in);
-//        int o1 = 10;
+
 
         //TEST
 
         AuthorRepository authorRepository = new AuthorRepository();
+        SectionRepository sectionRepository = new SectionRepository();
+
         authorRepository.createTable();
+        sectionRepository.createTable();
+
+//        for(Section s: my_library.getSections()) {
+//            sectionRepository.addSection(s);
+//        }
 //        for(Author a : my_library.getAuthors()) {
 //            authorRepository.insertAuthor(a.getName(), a.getDate_of_birth(), a.getDate_of_death());
 //        }
-        for (int i =6; i<=25; i++) {
-            authorRepository.deleteAuthorById(i);
-        }
-        authorRepository.displayAuthors();
 
-/*
+        authorRepository.displayAuthors();
+        sectionRepository.displaySections();
+
+
+
+
+        Scanner scanner = new Scanner(System.in);
+        int o1 = 10;
+
         while (o1 != 0) {
             System.out.println("Bine ai venit in biblioteca noastra!\nVa rugam sa selectati una din cele trei optiuni:\n1 - admin\n2 - user\n0 - iesi");
 
@@ -79,31 +90,31 @@ public class Main {
 
                     switch (o2) {
                         case 11: {
-                            user_operations.addAuthor(my_library,scanner);
+                            user_operations.addAuthor(authorRepository,scanner);
                             break;
                         }
                         case 12: {
-                            user_operations.deleteAuthor(my_library, scanner);
+                            user_operations.deleteAuthor(authorRepository, scanner);
                             break;
                         }
                         case 13: {
-                            user_operations.showAuthors(my_library);
+                            user_operations.showAuthors(authorRepository);
                             break;
                         }
                         case 21: {
-                            user_operations.addSection(my_library, scanner);
+                            user_operations.addSection(sectionRepository, scanner);
                             break;
                         }
                         case 22: {
-                            user_operations.deleteSection(my_library, scanner);
+                            user_operations.deleteSection(sectionRepository, scanner);
                             break;
                         }
                         case 23: {
-                            user_operations.showSections(my_library);
+                            user_operations.showSections(sectionRepository);
                             break;
                         }
                         case 24: {
-                            user_operations.showSectionBooks(my_library, scanner);
+                            user_operations.showSectionBooks(sectionRepository, scanner);
                             break;
                         }
                         case 31: {
@@ -139,15 +150,15 @@ public class Main {
 
                     switch (o2) {
                         case 11: {
-                            user_operations.showSections(my_library);
+                            user_operations.showSections(sectionRepository);
                             break;
                         }
                         case 12: {
-                            user_operations.showSectionBooks(my_library, scanner);
+                            user_operations.showSectionBooks(sectionRepository, scanner);
                             break;
                         }
                         case 13: {
-                            user_operations.showAuthors(my_library);
+                            user_operations.showAuthors(authorRepository);
                             break;
                         }
                         case 21: {
@@ -175,6 +186,6 @@ public class Main {
             }
 
         }
-*/
+
     }
 }
