@@ -5,6 +5,7 @@ import library.readers.AdultReader;
 import library.readers.Reader;
 import library.readers.YoungReader;
 import library.repository.AuthorRepository;
+import library.repository.BookRepository;
 import library.repository.SectionRepository;
 
 import java.time.LocalDateTime;
@@ -15,7 +16,7 @@ import java.nio.file.Path;
 
 public class UserOperations {
 
-    static Reader_Writer reader_writer = new Reader_Writer();
+//    static Reader_Writer reader_writer = new Reader_Writer();
     static String path = Path.of("proiect").toAbsolutePath() + "/src/library/files/audit.csv";
     static DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
     LocalDateTime now;
@@ -36,10 +37,7 @@ public class UserOperations {
             Author a = new Author(s1, s2, s3);
             authorRepository.addAuthor(a);
         }
-
-        now = LocalDateTime.now();
-        reader_writer.fileWriter(path, "author added," + dtf.format(now) + '\n');
-    }
+ }
 
     public void deleteAuthor(AuthorRepository authorRepository, Scanner scanner) {
         scanner.nextLine();
@@ -51,17 +49,11 @@ public class UserOperations {
         } else {
             authorRepository.deleteAuthor(a);
         }
-
-        now = LocalDateTime.now();
-        reader_writer.fileWriter(path, "author deleted," + dtf.format(now) + '\n');
-    }
+ }
 
     public void showAuthors(AuthorRepository authorRepository) {
         authorRepository.displayAuthors();
-
-        now = LocalDateTime.now();
-        reader_writer.fileWriter(path, "authors shown," + dtf.format(now) + '\n');
-    }
+   }
 
 
     ///SECTIONS
@@ -70,10 +62,7 @@ public class UserOperations {
         String s1 = scanner.next();
         Section s = new Section(s1);
         sectionRepository.addSection(s);
-
-        now = LocalDateTime.now();
-        reader_writer.fileWriter(path, "section added," + dtf.format(now) + '\n');
-    }
+  }
 
     public void deleteSection(SectionRepository sectionRepository, Scanner scanner) {
         System.out.println("Cum se numeste sectiunea?");
@@ -84,16 +73,10 @@ public class UserOperations {
         } else {
             sectionRepository.deleteSection(s);
         }
-
-        now = LocalDateTime.now();
-        reader_writer.fileWriter(path, "section deleted," + dtf.format(now) + '\n');
-    }
+   }
 
     public void showSections(SectionRepository sectionRepository) {
         sectionRepository.displaySections();
-
-        now = LocalDateTime.now();
-        reader_writer.fileWriter(path, "all sections shown," + dtf.format(now) + '\n');
     }
 
     public void showSectionBooks(SectionRepository sectionRepository, Scanner scanner) {
@@ -105,18 +88,15 @@ public class UserOperations {
         } else {
             sectionRepository.displaySection(s);
         }
-
-        now = LocalDateTime.now();
-        reader_writer.fileWriter(path, "section shown," + dtf.format(now) + '\n');
     }
 
     ///BOOKS
-    public void addBook(Library my_library, Scanner scanner) {
+    public void addBook(BookRepository bookRepository, SectionRepository sectionRepository, AuthorRepository authorRepository, Scanner scanner) {
 
         System.out.println("Din ce sectiune va face parte cartea?");
         String s1 = scanner.next();
         scanner.nextLine();
-        Section s = my_library.getSectionByName(s1);
+        Section s = sectionRepository.getSectionByName(s1);
         if (Objects.isNull(s)) {
             System.out.println("Nu am gasit aceasta sectiune");
         } else {
@@ -133,8 +113,7 @@ public class UserOperations {
             Boolean e5 = scanner.nextBoolean();
             scanner.nextLine();
             System.out.println("Cine a scris cartea?");
-            String aux6 = scanner.nextLine().trim();
-            Author e6 = my_library.getAuthorByName(aux6);
+            String e6 = scanner.nextLine().trim();
 
             System.out.println("Ce tip de carte este? 1 - roman/nuvela, 2 - biografie, 3 - banda desenata, 4 - enciclopedie");
             Integer option = scanner.nextInt();
@@ -144,17 +123,17 @@ public class UserOperations {
                 System.out.println("Ce tip de narator are?");
                 String e7 = scanner.nextLine();
                 System.out.println("Cine sunt personajele principale? (vor fi separate prin ele folosind -)");
-                String[] e8 = scanner.nextLine().split("-");
+                String e8 = scanner.nextLine();
 
-                Book b = new Novel(e1, e2, e3, e4, e5, e6, s, e7, e8);
-                s.addBook(b);
+                Book b = new Novel(e1, e2, e3, e4, e5, e6, s1, e7, e8);
+                bookRepository.addBook(b);
 
             } else if (option == 2) {
                 System.out.println("Despre cine este vorba in biografie?");
                 String e7 = scanner.nextLine();
 
-                Book b = new Biography(e1, e2, e3, e4, e5, e6, s, e7);
-                s.addBook(b);
+                Book b = new Biography(e1, e2, e3, e4, e5, e6, s1, e7);
+                bookRepository.addBook(b);
 
             } else if (option == 3) {
                 System.out.println("Este in alb-negru? true/false");
@@ -162,42 +141,25 @@ public class UserOperations {
                 System.out.println("Se citeste invers? true/false");
                 Boolean e8 = scanner.nextBoolean();
 
-                Book b = new ComicBook(e1, e2, e3, e4, e5, e6, s, e7, e8);
-                s.addBook(b);
+                Book b = new ComicBook(e1, e2, e3, e4, e5, e6, s1, e7, e8);
+                bookRepository.addBook(b);
 
             } else if (option == 4) {
                 System.out.println("Ce subiect aprofundeaza?");
                 String e7 = scanner.next();
 
-                Book b = new Encyclopedia(e1, e2, e3, e4, e5, e6, s, e7);
-                s.addBook(b);
+                Book b = new Encyclopedia(e1, e2, e3, e4, e5, e6, s1, e7);
+                bookRepository.addBook(b);
             }
         }
-
-        now = LocalDateTime.now();
-        reader_writer.fileWriter(path, "book added," + dtf.format(now) + '\n');
     }
 
-    public void deleteBook(Library my_library, Scanner scanner) {
-        System.out.println("Din ce sectiune este cartea pe care vreti sa o stergeti?");
+    public void deleteBook(BookRepository bookRepository, Scanner scanner) {
+        System.out.println("Cum se numeste cartea pe care vreti sa o stergeti?");
         String s1 = scanner.next();
         scanner.nextLine();
-        Section s = my_library.getSectionByName(s1);
-        if (Objects.isNull(s)) {
-            System.out.println("Nu am gasit aceasta sectiune");
-        } else {
-            System.out.println("Cum se numeste cartea pe care vreti sa o stergeti?");
-            String c1 = scanner.nextLine();
-            Book b = s.getBookByTitle(c1);
-            if (b == null) {
-                System.out.println("Nu am gasit aceasta carte");
-            } else {
-                s.deleteBook(b);
-            }
-        }
-
-        now = LocalDateTime.now();
-        reader_writer.fileWriter(path, "book deleted," + dtf.format(now) + '\n');
+        Book b = bookRepository.getBookByTitle(s1);
+        bookRepository.deleteBook(b);
     }
 
     public void borrowBook(Library my_library, Scanner scanner, Reader reader) {
@@ -224,10 +186,7 @@ public class UserOperations {
                 }
             }
         }
-
-        now = LocalDateTime.now();
-        reader_writer.fileWriter(path, "book borrowed," + dtf.format(now) + '\n');
-    }
+   }
 
     public void returnBook(Library my_library, Scanner scanner, Reader reader) {
         System.out.println("Din ce sectiune este cartea pe care doriti sa o returnati?");
@@ -246,19 +205,13 @@ public class UserOperations {
                 reader.returnBook(b);
             }
         }
-
-        now = LocalDateTime.now();
-        reader_writer.fileWriter(path, "book returned," + dtf.format(now) + '\n');
     }
 
     public void showBorrowedBooks(Reader reader) {
         for(String s : reader.getBorrowed_books()) {
             System.out.println(s);
         }
-
-        now = LocalDateTime.now();
-        reader_writer.fileWriter(path, "borrowed books shown," + dtf.format(now) + '\n');
-    }
+   }
 
     public Reader login(Library my_library, Scanner scanner) {
         scanner.nextLine();
@@ -297,10 +250,6 @@ public class UserOperations {
                 reader = r;
             }
         }
-
-        now = LocalDateTime.now();
-        reader_writer.fileWriter(path, "user logged in," + dtf.format(now) + '\n');
-
         return reader;
     }
 }

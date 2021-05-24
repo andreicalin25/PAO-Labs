@@ -5,6 +5,7 @@ import library.readers.AdultReader;
 import library.readers.Reader;
 import library.readers.YoungReader;
 import library.repository.AuthorRepository;
+import library.repository.BookRepository;
 import library.repository.SectionRepository;
 
 import javax.swing.*;
@@ -44,9 +45,11 @@ public class Main {
 
         AuthorRepository authorRepository = new AuthorRepository();
         SectionRepository sectionRepository = new SectionRepository();
+        BookRepository bookRepository = new BookRepository();
 
         authorRepository.createTable();
         sectionRepository.createTable();
+        bookRepository.createTable();
 
 //        for(Section s: my_library.getSections()) {
 //            sectionRepository.addSection(s);
@@ -55,10 +58,8 @@ public class Main {
 //            authorRepository.insertAuthor(a.getName(), a.getDate_of_birth(), a.getDate_of_death());
 //        }
 
-        authorRepository.displayAuthors();
-        sectionRepository.displaySections();
-
-
+//        authorRepository.displayAuthors();
+//        sectionRepository.displaySections();
 
 
         Scanner scanner = new Scanner(System.in);
@@ -118,11 +119,11 @@ public class Main {
                             break;
                         }
                         case 31: {
-                            user_operations.addBook(my_library, scanner);
+                            user_operations.addBook(bookRepository, sectionRepository, authorRepository, scanner);
                             break;
                         }
                         case 32: {
-                            user_operations.deleteBook(my_library, scanner);
+                            user_operations.deleteBook(bookRepository, scanner);
                             break;
                         }
                         default:
@@ -178,12 +179,12 @@ public class Main {
                     }
                 }
             }
-            else {
-                reader_writer.writeAuthors(my_library);
-                reader_writer.writeBooks(my_library);
-                reader_writer.writeSections(my_library);
-                reader_writer.writeReaders(my_library);
-            }
+//            else {
+//                reader_writer.writeAuthors(my_library);
+//                reader_writer.writeBooks(my_library);
+//                reader_writer.writeSections(my_library);
+//                reader_writer.writeReaders(my_library);
+//            }
 
         }
 

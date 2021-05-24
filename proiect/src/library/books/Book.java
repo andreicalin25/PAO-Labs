@@ -11,10 +11,10 @@ public class Book implements Comparable<Book>{
     private Integer publication_year;
     private String informations;
     private Boolean explicit_content;
-    private Author author;
-    private Section section;
+    private String author;
+    private String section;
 
-    public Book(String title, Integer nr_of_pages, Integer publication_year, String informations, Boolean explicit_content, Author author, Section section) {
+    public Book(String title, Integer nr_of_pages, Integer publication_year, String informations, Boolean explicit_content, String author, String section) {
         this.title = title;
         this.nr_of_pages = nr_of_pages;
         this.publication_year = publication_year;
@@ -64,33 +64,33 @@ public class Book implements Comparable<Book>{
         this.explicit_content = explicit_content;
     }
 
-    public Author getAuthor() {
+    public String getAuthor() {
         return author;
     }
 
-    public void setAuthor(Author author) {
+    public void setAuthor(String author) {
         this.author = author;
     }
 
-    public Section getSection() {
+    public String getSection() {
         return section;
     }
 
-    public void setSection(Section section) {
+    public void setSection(String section) {
         this.section = section;
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Book)) return false;
-        Book book = (Book) o;
-        return Objects.equals(getTitle(), book.getTitle()) && Objects.equals(getNr_of_pages(), book.getNr_of_pages()) && Objects.equals(getPublication_year(), book.getPublication_year()) && Objects.equals(getInformations(), book.getInformations()) && Objects.equals(getExplicit_content(), book.getExplicit_content()) && Objects.equals(getAuthor(), book.getAuthor()) && Objects.equals(getSection(), book.getSection());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getTitle(), getNr_of_pages(), getPublication_year(), getInformations(), getExplicit_content(), getAuthor(), getSection());
+    public String toString() {
+        return "Book{" +
+                "title='" + title + '\'' +
+                ", nr_of_pages=" + nr_of_pages +
+                ", publication_year=" + publication_year +
+                ", informations='" + informations + '\'' +
+                ", explicit_content=" + explicit_content +
+                ", author='" + author + '\'' +
+                ", section='" + section + '\'' +
+                '}';
     }
 
     @Override
@@ -98,18 +98,9 @@ public class Book implements Comparable<Book>{
         return this.title.compareTo(b.title);
     }
 
-    @Override
-    public String toString() {
-        return  '\n' + title + '\n' +
-                '-' + author.getName() +
-                '\n' + nr_of_pages +
-                ", " + publication_year +
-                ", " + informations;
-    }
-
     public String toWrite() {
-        String string = section.getName() + ',' + title + ',' + nr_of_pages.toString() + ',' + publication_year.toString() + ','
-                + informations + ',' + explicit_content.toString() + ',' + author.getName();
+        String string = section + ',' + title + ',' + nr_of_pages.toString() + ',' + publication_year.toString() + ','
+                + informations + ',' + explicit_content.toString() + ',' + author;
 
         return string;
     }

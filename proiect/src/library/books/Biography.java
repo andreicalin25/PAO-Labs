@@ -9,7 +9,7 @@ public class Biography extends Book{
 
     private String person;
 
-    public Biography(String title, Integer nr_of_pages, Integer publication_year, String informations, Boolean explicit_content, Author author, Section section, String person) {
+    public Biography(String title, Integer nr_of_pages, Integer publication_year, String informations, Boolean explicit_content, String author, String section, String person) {
         super(title, nr_of_pages, publication_year, informations, explicit_content, author, section);
         this.person = person;
     }
@@ -25,8 +25,8 @@ public class Biography extends Book{
     @Override
     public String toWrite() {
 
-        String string = "biography," + getSection().getName() + ',' + getTitle() + ',' + getNr_of_pages().toString() + ',' + getPublication_year().toString()
-                + ',' + getInformations().toString() + ',' + getExplicit_content().toString() + ',' + getAuthor().getName()
+        String string = "biography," + getSection() + ',' + getTitle() + ',' + getNr_of_pages().toString() + ',' + getPublication_year().toString()
+                + ',' + getInformations().toString() + ',' + getExplicit_content().toString() + ',' + getAuthor()
                 + ',' + person;
 
         return string;

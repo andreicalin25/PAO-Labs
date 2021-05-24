@@ -103,11 +103,11 @@ public class Reader_Writer {
                 Boolean explicit = Boolean.valueOf(book_string.get(6));
                 String author = book_string.get(7);
                 String narrator = book_string.get(8);
-                String[] characters = book_string.get(9).split("-");
+                String characters = book_string.get(9);
 
                 Section sec = my_library.getSectionByName(section);
                 Author aut = my_library.getAuthorByName(author);
-                Book b = new Novel(title, pages, year, info, explicit, aut, sec, narrator, characters);
+                Book b = new Novel(title, pages, year, info, explicit, author, section, narrator, characters);
 
                 sec.addBook(b);
             }
@@ -123,7 +123,7 @@ public class Reader_Writer {
 
                 Section sec = my_library.getSectionByName(section);
                 Author aut = my_library.getAuthorByName(author);
-                Book b = new Biography(title, pages, year, info, explicit, aut, sec, character);
+                Book b = new Biography(title, pages, year, info, explicit, author, section, character);
 
                 sec.addBook(b);
             }
@@ -140,7 +140,7 @@ public class Reader_Writer {
 
                 Section sec = my_library.getSectionByName(section);
                 Author aut = my_library.getAuthorByName(author);
-                Book b = new ComicBook(title, pages, year, info, explicit, aut, sec, b_w, back);
+                Book b = new ComicBook(title, pages, year, info, explicit, author, section, b_w, back);
 
                 sec.addBook(b);
             }
@@ -156,7 +156,7 @@ public class Reader_Writer {
 
                 Section sec = my_library.getSectionByName(section);
                 Author aut = my_library.getAuthorByName(author);
-                Book b = new Encyclopedia(title, pages, year, info, explicit, aut, sec, subject);
+                Book b = new Encyclopedia(title, pages, year, info, explicit, author, section, subject);
 
                 sec.addBook(b);
             }

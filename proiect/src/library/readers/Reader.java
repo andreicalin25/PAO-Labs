@@ -65,7 +65,7 @@ public abstract class Reader {
         ArrayList<String> books_info = new ArrayList<String>();
 
         for(Book b : borrowed_books) {
-            books_info.add(b.getTitle() + " - " + b.getAuthor().getName());
+            books_info.add(b.getTitle() + " - " + b.getAuthor());
         }
 
         return books_info;

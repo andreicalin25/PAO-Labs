@@ -23,12 +23,12 @@ public class SectionRepository {
     }
 
     public void addSection(Section s) {
-        String insertAuthorSql = "INSERT INTO sections(name) VALUES(?)";
+        String insertSectionSql = "INSERT INTO sections(name) VALUES(?)";
 
         Connection connection = DatabaseConfiguration.getDatabaseConnection();
 
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement(insertAuthorSql);
+            PreparedStatement preparedStatement = connection.prepareStatement(insertSectionSql);
             preparedStatement.setString(1, s.getName());
 
             preparedStatement.executeUpdate();
@@ -69,17 +69,24 @@ public class SectionRepository {
     }
 
     public void deleteSection(Section s) {
-        String updateNameSql = "DELETE FROM sections WHERE name=?";
+        String deleteSectionSql = "DELETE FROM sections WHERE name=?";
 
         Connection connection = DatabaseConfiguration.getDatabaseConnection();
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement(updateNameSql);
-            preparedStatement.setString(1, s.getName());
+            PreparedStatement preparedStatement1 = connection.prepareStatement(deleteSectionSql);
+            preparedStatement1.setString(1, s.getName());
 
-            preparedStatement.executeUpdate();
+            preparedStatement1.executeUpdate();
 
-
-            //stergere carti
+            // Sterge cartile din sectiunea data
+            String deleteBooksSql = "DELETE FROM books WHERE section=?";
+            try {
+                PreparedStatement preparedStatement2 = connection.prepareStatement(deleteBooksSql);
+                preparedStatement2.setString(1, s.getName());
+                preparedStatement2.executeUpdate();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -99,15 +106,28 @@ public class SectionRepository {
         Connection connection = DatabaseConfiguration.getDatabaseConnection();
 
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement(selectSql);
-            preparedStatement.setString(1, s.getName());
+            PreparedStatement preparedStatement1 = connection.prepareStatement(selectSql);
+            preparedStatement1.setString(1, s.getName());
+            ResultSet resultSet1 = preparedStatement1.executeQuery();
+            System.out.println("Name: " + resultSet1.getString(1));
 
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            System.out.println("Name: " + resultSet.getString(1));
 
             // afisare carti
-
+            String selectBooksSql = "SELECT * FROM books WHERE section=?";
+            try {
+                PreparedStatement preparedStatement2 = connection.prepareStatement(selectSql);
+                preparedStatement2.setString(1, s.getName());
+                ResultSet resultSet2 = preparedStatement2.executeQuery();
+                while (resultSet2.next()) {
+                    System.out.println("Title: " + resultSet2.getString(2));
+                    System.out.println("Type: " + resultSet2.getString(3));
+                    System.out.println("Author: " + resultSet2.getString(4));
+                    System.out.println("Number of pages: " + resultSet2.getString(6));
+                    System.out.println("Year of publication: " + resultSet2.getString(7));
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -123,10 +143,20 @@ public class SectionRepository {
             Statement stmt = connection.createStatement();
             ResultSet resultSet = stmt.executeQuery(selectSql);
             while (resultSet.next()) {
-                System.out.print("Id: " + resultSet.getString(1));
                 System.out.println(", Name: " + resultSet.getString(2));
 
-                //afisare titluri
+                // Afisare titluri
+                String selectBooksSql = "SELECT * FROM books WHERE section=?";
+                try {
+                    PreparedStatement preparedStatement2 = connection.prepareStatement(selectBooksSql);
+                    preparedStatement2.setString(1, resultSet.getString(2));
+                    ResultSet resultSet2 = preparedStatement2.executeQuery();
+                    while (resultSet2.next()) {
+                        System.out.println("Title: " + resultSet2.getString(2));
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
 
             }
 

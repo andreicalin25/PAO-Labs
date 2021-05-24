@@ -72,14 +72,25 @@ public class AuthorRepository {
     }
 
     public void deleteAuthor(Author a) {
-        String updateNameSql = "DELETE FROM authors  WHERE name=?";
+        String deleteAuthorSql = "DELETE FROM authors  WHERE name=?";
 
         Connection connection = DatabaseConfiguration.getDatabaseConnection();
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement(updateNameSql);
+            PreparedStatement preparedStatement = connection.prepareStatement(deleteAuthorSql);
             preparedStatement.setString(1, a.getName());
 
             preparedStatement.executeUpdate();
+
+            // Sterge cartile scrise de autorul dat
+            String deleteBooksSql = "DELETE FROM books WHERE author=?";
+            try {
+                PreparedStatement preparedStatement2 = connection.prepareStatement(deleteBooksSql);
+                preparedStatement2.setString(1, a.getName());
+                preparedStatement2.executeUpdate();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
