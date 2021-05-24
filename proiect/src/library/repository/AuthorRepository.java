@@ -66,6 +66,20 @@ public class AuthorRepository {
             preparedStatement.setString(2, a.getName());
 
             preparedStatement.executeUpdate();
+
+
+            String updateBooksSql = "UPDATE books SET author=? WHERE author=?";
+
+            try {
+                PreparedStatement preparedStatement2 = connection.prepareStatement(updateBooksSql);
+                preparedStatement2.setString(1, name);
+                preparedStatement2.setString(2, a.getName());
+
+                preparedStatement.executeUpdate();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }

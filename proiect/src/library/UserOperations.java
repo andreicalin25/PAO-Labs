@@ -6,6 +6,7 @@ import library.readers.Reader;
 import library.readers.YoungReader;
 import library.repository.AuthorRepository;
 import library.repository.BookRepository;
+import library.repository.ReaderRepository;
 import library.repository.SectionRepository;
 
 import java.time.LocalDateTime;
@@ -162,55 +163,39 @@ public class UserOperations {
         bookRepository.deleteBook(b);
     }
 
-    public void borrowBook(Library my_library, Scanner scanner, Reader reader) {
-        System.out.println("Din ce sectiune doriti sa imprumutati?");
-        String s1 = scanner.next();
-        Section s = my_library.getSectionByName(s1);
+    public void borrowBook(BookRepository bookRepository, Scanner scanner, Reader reader) {
 
-        if (Objects.isNull(s)) {
-            System.out.println("Nu am gasit aceasta sectiune");
-        } else {
-            scanner.nextLine();
-            System.out.println("Cum se numeste cartea pe care doriti sa o imprumutati?");
-            String aux = scanner.nextLine();
-            Book b = s.getBookByTitle(aux);
-            if (Objects.isNull(b)) {
+        System.out.println("Cum se numeste cartea pe care doriti sa o imprumutati?");
+        String aux = scanner.nextLine();
+        Book b = bookRepository.getBookByTitle(aux);
+        if (Objects.isNull(b)) {
                 System.out.println("Nu am gasit aceasta carte");
             }
-            else {
+        else {
                 if (reader.isUnderAged() && b.getExplicit_content()) {
                     System.out.println("Un cititor tanar nu poate imprumuta aceasta carte!");
                 }
                 else {
-                    reader.borrowBook(b);
+                    bookRepository.getBorrowed(b, reader.getName());
                 }
             }
-        }
+
    }
 
-    public void returnBook(Library my_library, Scanner scanner, Reader reader) {
-        System.out.println("Din ce sectiune este cartea pe care doriti sa o returnati?");
-        String s1 = scanner.next();
-        Section s = my_library.getSectionByName(s1);
-        if (Objects.isNull(s)) {
-            System.out.println("Nu am gasit aceasta sectiune");
+    public void returnBook(BookRepository bookRepository , Scanner scanner, Reader reader) {
+
+        System.out.println("Cum se numeste cartea pe care doriti sa o returnati?");
+        String aux = scanner.nextLine();
+        Book b = bookRepository.getBookByTitle(aux);
+        if (b == null) {
+            System.out.println("Nu am gasit aceasta carte");
         } else {
-            scanner.nextLine();
-            System.out.println("Cum se numeste cartea pe care doriti sa o returnati?");
-            String aux = scanner.nextLine();
-            Book b = s.getBookByTitle(aux);
-            if (b == null) {
-                System.out.println("Nu am gasit aceasta carte");
-            } else {
-                reader.returnBook(b);
-            }
+            bookRepository.returnBorrowed(b);
         }
     }
 
-    public void showBorrowedBooks(Reader reader) {
-        for(String s : reader.getBorrowed_books()) {
-            System.out.println(s);
-        }
+    public void showBorrowedBooks(ReaderRepository readerRepository, Reader reader) {
+        readerRepository.displayReader(reader);
    }
 
     public Reader login(Library my_library, Scanner scanner) {

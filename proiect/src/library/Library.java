@@ -48,85 +48,85 @@ public class Library {
         this.readers = readers;
     }
 
-    //SECTIONS ADD - SHOW - DELETE
-    public void addSection(Section new_s) {
-        this.sections.add(new_s);
-    }
-
-    public void deleteSection(Section deleted_s) {
-        deleted_s.setName(null);
-        deleted_s.setBooks(null);
-    }
-
-    public void showSection(Section s){
-        s.showBooks();
-    }
-
-    public void showSections() {
-
-        for (Section s : sections) {
-            System.out.println(s.getName() + ':');
-
-            for (Book b : s.getBooks()){
-                System.out.println(b.getTitle());
-            }
-
-            System.out.println('\n');
-        }
-    }
-
-    public Section getSectionByName(String name) {
-        for (Section s : sections) {
-            if (s.getName().equals(name))
-                return s;
-        }
-        return null;
-    }
-
-    public Section getSectionByBook(Book b) {
-        for (Section s : sections) {
-            if (s.getBooks().contains(b))
-                return s;
-        }
-        return null;
-    }
-
-    //AUTHORS ADD - SHOW - DELETE
-
-    public void deleteAuthor(Author deleted_a) {
-
-        for(Section s : sections) {
-            s.deleteBooksWrittenBy(deleted_a);
-        }
-
-        this.authors.remove(deleted_a);
-    }
-
-    public void showAuthors() {
-
-        for (Author a : authors) {
-            System.out.println(a);
-
-            String titles = "";
-            for (Section s : sections){
-                for (Book b : s.getBooks()){
-                    if(b.getAuthor().equals(a)) {
-                        titles += b.getTitle() + "\n";
-                    }
-                }
-            }
-
-            System.out.println(titles);
-        }
-    }
-
-    public Author getAuthorByName(String name) {
-        for (Author a : authors) {
-            if (a.getName().equals(name))
-                return a;
-        }
-        return null;
-    }
+//    //SECTIONS ADD - SHOW - DELETE
+//    public void addSection(Section new_s) {
+//        this.sections.add(new_s);
+//    }
+//
+//    public void deleteSection(Section deleted_s) {
+//        deleted_s.setName(null);
+//        deleted_s.setBooks(null);
+//    }
+//
+//    public void showSection(Section s){
+//        s.showBooks();
+//    }
+//
+//    public void showSections() {
+//
+//        for (Section s : sections) {
+//            System.out.println(s.getName() + ':');
+//
+//            for (Book b : s.getBooks()){
+//                System.out.println(b.getTitle());
+//            }
+//
+//            System.out.println('\n');
+//        }
+//    }
+//
+//    public Section getSectionByName(String name) {
+//        for (Section s : sections) {
+//            if (s.getName().equals(name))
+//                return s;
+//        }
+//        return null;
+//    }
+//
+//    public Section getSectionByBook(Book b) {
+//        for (Section s : sections) {
+//            if (s.getBooks().contains(b))
+//                return s;
+//        }
+//        return null;
+//    }
+//
+//    //AUTHORS ADD - SHOW - DELETE
+//
+//    public void deleteAuthor(Author deleted_a) {
+//
+//        for(Section s : sections) {
+//            s.deleteBooksWrittenBy(deleted_a);
+//        }
+//
+//        this.authors.remove(deleted_a);
+//    }
+//
+//    public void showAuthors() {
+//
+//        for (Author a : authors) {
+//            System.out.println(a);
+//
+//            String titles = "";
+//            for (Section s : sections){
+//                for (Book b : s.getBooks()){
+//                    if(b.getAuthor().equals(a)) {
+//                        titles += b.getTitle() + "\n";
+//                    }
+//                }
+//            }
+//
+//            System.out.println(titles);
+//        }
+//    }
+//
+//    public Author getAuthorByName(String name) {
+//        for (Author a : authors) {
+//            if (a.getName().equals(name))
+//                return a;
+//        }
+//        return null;
+//    }
 
     //READERS ADD - SHOW
     public void addReader(Reader new_r) {
@@ -148,15 +148,5 @@ public class Library {
         return null;
     }
 
-    //BOOKS GET
-    public Book getBookByName(String name) {
-        for (Section s : sections) {
-            for (Book b : s.getBooks()) {
-                if (b.getTitle().equals(name)) {
-                    return b;
-                }
-            }
-        }
-        return null;
-    }
+
 }

@@ -61,11 +61,11 @@ public abstract class Reader {
         this.email_address = email_address;
     }
 
-    public ArrayList<String> getBorrowed_books() {
-        ArrayList<String> books_info = new ArrayList<String>();
+    public ArrayList<Book> getBorrowed_books() {
+        ArrayList<Book> books_info = new ArrayList<Book>();
 
         for(Book b : borrowed_books) {
-            books_info.add(b.getTitle() + " - " + b.getAuthor());
+            books_info.add(b);
         }
 
         return books_info;

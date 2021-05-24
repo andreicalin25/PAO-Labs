@@ -63,6 +63,21 @@ public class SectionRepository {
             preparedStatement.setString(2, s.getName());
 
             preparedStatement.executeUpdate();
+
+
+            //also update section_name in Books
+            String updateBooksSql = "UPDATE books SET section=? WHERE section=?";
+
+            try {
+                PreparedStatement preparedStatement2 = connection.prepareStatement(updateBooksSql);
+                preparedStatement2.setString(1, name);
+                preparedStatement2.setString(2, s.getName());
+
+                preparedStatement.executeUpdate();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }

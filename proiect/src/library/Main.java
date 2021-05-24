@@ -6,6 +6,7 @@ import library.readers.Reader;
 import library.readers.YoungReader;
 import library.repository.AuthorRepository;
 import library.repository.BookRepository;
+import library.repository.ReaderRepository;
 import library.repository.SectionRepository;
 
 import javax.swing.*;
@@ -25,11 +26,12 @@ public class Main {
         UserOperations user_operations = new UserOperations();
         Library my_library = new Library();
 
+        BookRepository bookRepository = new BookRepository();
 
 //        reader_writer.readAuthors(my_library);
-        reader_writer.readSections(my_library);
-        reader_writer.readBooks(my_library);
-        reader_writer.readReaders(my_library);
+//        reader_writer.readSections(my_library);
+//        reader_writer.readBooks(my_library);
+        reader_writer.readReaders(my_library, bookRepository);
 
 //        System.out.println("##### Autori #####");
 //        my_library.showAuthors();
@@ -45,12 +47,22 @@ public class Main {
 
         AuthorRepository authorRepository = new AuthorRepository();
         SectionRepository sectionRepository = new SectionRepository();
-        BookRepository bookRepository = new BookRepository();
+        ReaderRepository readerRepository = new ReaderRepository();
 
         authorRepository.createTable();
         sectionRepository.createTable();
         bookRepository.createTable();
+        readerRepository.createTable();
 
+        Reader r = readerRepository.getReaderByName("Calin Andrei");
+        Book b = bookRepository.getBookByTitle("Avengers #1");
+        bookRepository.getBorrowed(b, r.getName());
+
+//        for (Section s : my_library.getSections()) {
+//            for(Book b : s.getBooks()) {
+//                bookRepository.addBook(b);
+//            }
+//        }
 //        for(Section s: my_library.getSections()) {
 //            sectionRepository.addSection(s);
 //        }
@@ -60,7 +72,10 @@ public class Main {
 
 //        authorRepository.displayAuthors();
 //        sectionRepository.displaySections();
-
+        bookRepository.displayBooks();
+        System.out.println("");
+        System.out.println("");
+        readerRepository.displayReaders();
 
         Scanner scanner = new Scanner(System.in);
         int o1 = 10;
@@ -163,15 +178,15 @@ public class Main {
                             break;
                         }
                         case 21: {
-                            user_operations.borrowBook(my_library, scanner, reader);
+                            user_operations.borrowBook(bookRepository, scanner, reader);
                             break;
                         }
                         case 22: {
-                            user_operations.returnBook(my_library, scanner, reader);
+                            user_operations.returnBook(bookRepository, scanner, reader);
                             break;
                         }
                         case 23: {
-                            user_operations.showBorrowedBooks(reader);
+                            user_operations.showBorrowedBooks(readerRepository, reader);
                             break;
                         }
                         default:

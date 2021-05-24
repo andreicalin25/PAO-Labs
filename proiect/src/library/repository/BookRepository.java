@@ -9,7 +9,7 @@ import java.sql.*;
 /*
 pozitie in baza de date - variablia - pozitie in constructor
 1 - title - 1
-2 - type - #
+2 - book_type - #
 3 - author - 6
 4 - section - 7
 5 - nr pag - 2
@@ -28,14 +28,14 @@ public class BookRepository {
 
     public void createTable() {
         String createTableSql = "CREATE TABLE IF NOT EXISTS books" +
-                "(id int PRIMARY KEY AUTO_INCREMENT, title varchar(50), type varchar(20)" +
-                "author varchar(30), section varchar(30)" +
-                "nr_of_pages int, publication_year int," +
-                "informations varchar(200), explicit_content boolean," +
-                "novel_narrator varchar(30), novel_main_characters varchar(200)" +
-                "comicbook_black_and_white boolean, comicbook_backwards_reading boolean," +
-                "biography_person varchar(30)," +
-                "encyclopedia_subject varchar(30)" +
+                "(id int PRIMARY KEY AUTO_INCREMENT, title varchar(50), book_type varchar(20), " +
+                "author varchar(30), section varchar(30), " +
+                "nr_of_pages int, publication_year int, " +
+                "informations varchar(200), explicit_content boolean, " +
+                "novel_narrator varchar(30), novel_main_characters varchar(200), " +
+                "comicbook_black_and_white boolean, comicbook_backwards_reading boolean, " +
+                "biography_person varchar(30), " +
+                "encyclopedia_subject varchar(30), " +
                 "borrowed_by varchar(30))";
 
         Connection connection = DatabaseConfiguration.getDatabaseConnection();
@@ -56,25 +56,25 @@ public class BookRepository {
         switch (type) {
             case "Novel":
                 insertBookSql = "INSERT INTO books" +
-                        "(title, type, author, section, nr_of_pages, publication_year," +
+                        "(title, book_type, author, section, nr_of_pages, publication_year," +
                         "informations, explicit_content, novel_narrator, novel_main_characters) " +
                         "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
                 break;
             case "ComicBook":
                 insertBookSql = "INSERT INTO books" +
-                        "(title, type, author, section, nr_of_pages, publication_year," +
+                        "(title, book_type, author, section, nr_of_pages, publication_year," +
                         "informations, explicit_content, comicbook_black_and_white, comicbook_backwards_reading) " +
                         "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
                 break;
             case "Biography":
                 insertBookSql = "INSERT INTO books" +
-                        "(title, type, author, section, nr_of_pages, publication_year," +
+                        "(title, book_type, author, section, nr_of_pages, publication_year," +
                         "informations, explicit_content, biography_person) " +
                         "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
                 break;
             case "Encyclopedia":
                 insertBookSql = "INSERT INTO books" +
-                        "(title, type, author, section, nr_of_pages, publication_year," +
+                        "(title, book_type, author, section, nr_of_pages, publication_year," +
                         "informations, explicit_content, encyclopedia_subject) " +
                         "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
                 break;
@@ -143,34 +143,34 @@ public class BookRepository {
     private Book mapToBook(ResultSet resultSet) throws SQLException {
         if (resultSet.next()) {
 
-            switch (resultSet.getString(2)) {
+            switch (resultSet.getString(3)) {
                 case "Novel":
-                    return new Novel(resultSet.getString(1), resultSet.getInt(5), resultSet.getInt(6),
-                            resultSet.getString(7), resultSet.getBoolean(8), resultSet.getString(3),
-                            resultSet.getString(4), resultSet.getString(9), resultSet.getString(10));
+                    return new Novel(resultSet.getString(2), resultSet.getInt(6), resultSet.getInt(7),
+                            resultSet.getString(8), resultSet.getBoolean(9), resultSet.getString(4),
+                            resultSet.getString(5), resultSet.getString(10), resultSet.getString(11));
                 case "ComicBook":
-                    return new ComicBook(resultSet.getString(1), resultSet.getInt(5), resultSet.getInt(6),
-                            resultSet.getString(7), resultSet.getBoolean(8), resultSet.getString(3),
-                            resultSet.getString(4), resultSet.getBoolean(11), resultSet.getBoolean(12));
+                    return new ComicBook(resultSet.getString(2), resultSet.getInt(6), resultSet.getInt(7),
+                            resultSet.getString(8), resultSet.getBoolean(9), resultSet.getString(4),
+                            resultSet.getString(5), resultSet.getBoolean(12), resultSet.getBoolean(13));
                 case "Biography":
-                    return new Biography(resultSet.getString(1), resultSet.getInt(5), resultSet.getInt(6),
-                            resultSet.getString(7), resultSet.getBoolean(8), resultSet.getString(3),
-                            resultSet.getString(4), resultSet.getString(13));
+                    return new Biography(resultSet.getString(2), resultSet.getInt(6), resultSet.getInt(7),
+                            resultSet.getString(8), resultSet.getBoolean(9), resultSet.getString(4),
+                            resultSet.getString(5), resultSet.getString(14));
                 case "Encyclopedia":
-                    return new Encyclopedia(resultSet.getString(1), resultSet.getInt(5), resultSet.getInt(6),
-                            resultSet.getString(7), resultSet.getBoolean(8), resultSet.getString(3),
-                            resultSet.getString(4), resultSet.getString(14));
+                    return new Encyclopedia(resultSet.getString(2), resultSet.getInt(6), resultSet.getInt(7),
+                            resultSet.getString(8), resultSet.getBoolean(9), resultSet.getString(4),
+                            resultSet.getString(5), resultSet.getString(15));
             }
         }
         return null;
     }
 
     public void deleteBook(Book b) {
-        String deleteAuthorSql = "DELETE FROM books  WHERE title=?";
+        String deleteBookSql = "DELETE FROM books  WHERE title=?";
 
         Connection connection = DatabaseConfiguration.getDatabaseConnection();
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement(deleteAuthorSql);
+            PreparedStatement preparedStatement = connection.prepareStatement(deleteBookSql);
             preparedStatement.setString(1, b.getTitle());
 
             preparedStatement.executeUpdate();
@@ -179,9 +179,8 @@ public class BookRepository {
         }
     }
 
-    //TODO: DE IMPLEMENTAT ____________________________________________________________
     public void displayBooks() {
-        String selectSql = "SELECT * FROM persons";
+        String selectSql = "SELECT * FROM books";
 
         Connection connection = DatabaseConfiguration.getDatabaseConnection();
 
@@ -189,11 +188,47 @@ public class BookRepository {
             Statement stmt = connection.createStatement();
             ResultSet resultSet = stmt.executeQuery(selectSql);
             while (resultSet.next()) {
-                System.out.println("Id:" + resultSet.getString(1));
-                System.out.println("Name:" + resultSet.getString(2));
-                System.out.println("Age:" + resultSet.getDouble(3));
+                System.out.println("Id: " + resultSet.getString(1));
+                System.out.println("Title: " + resultSet.getString(2));
+                System.out.println("Type: " + resultSet.getString(3));
+                System.out.println("Author: " + resultSet.getString(4));
+                System.out.println("Section: " + resultSet.getString(5));
+                System.out.println("Nr pages: " + resultSet.getInt(6));
+                System.out.println("Borrowed by: " + resultSet.getString(16));
+                System.out.println("");
+
             }
 
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void getBorrowed(Book b, String name) {
+        String borrowBookSql = "UPDATE books SET borrowed_by=? WHERE title=?";
+
+        Connection connection = DatabaseConfiguration.getDatabaseConnection();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(borrowBookSql);
+            preparedStatement.setString(1, name);
+            preparedStatement.setString(2, b.getTitle());
+
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void returnBorrowed(Book b) {
+        String borrowBookSql = "UPDATE books SET borrowed_by=? WHERE title=?";
+
+        Connection connection = DatabaseConfiguration.getDatabaseConnection();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(borrowBookSql);
+            preparedStatement.setString(1, null);
+            preparedStatement.setString(2, b.getTitle());
+
+            preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
