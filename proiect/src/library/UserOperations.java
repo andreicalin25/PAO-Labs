@@ -17,11 +17,6 @@ import java.nio.file.Path;
 
 public class UserOperations {
 
-//    static Reader_Writer reader_writer = new Reader_Writer();
-    static String path = Path.of("proiect").toAbsolutePath() + "/src/library/files/audit.csv";
-    static DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-    LocalDateTime now;
-
     /// AUTHORS
     public void addAuthor(AuthorRepository authorRepository, Scanner scanner) {
         String blank = scanner.nextLine();
