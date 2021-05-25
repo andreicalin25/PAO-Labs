@@ -14,12 +14,6 @@ public class YoungReader extends Reader {
         this.parents_email = parents_email;
     }
 
-    public YoungReader(String name, Integer age, String phone_number, String email_address, ArrayList<Book> books, String parents_phone, String parents_email) {
-        super(name, age, phone_number, email_address, books);
-        this.parents_phone = parents_phone;
-        this.parents_email = parents_email;
-    }
-
     public Boolean isUnderAged() {
         return true;
     }
@@ -45,17 +39,6 @@ public class YoungReader extends Reader {
 
         String string = name + ',' + age.toString() + ',' + phone_number + ',' + email_address + ',' + parents_phone + ',' + parents_email;
 
-        if(!borrowed_books.isEmpty()) {
-            string += ',';
-
-            for (Book b : borrowed_books) {
-                if(b.equals(borrowed_books.get(borrowed_books.size() - 1))) {
-                    string += b.getTitle();
-                } else {
-                    string += b.getTitle() + '-';
-                }
-            }
-        }
         return string;
     }
 }

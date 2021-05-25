@@ -222,6 +222,7 @@ public class UserOperations {
 
                 AdultReader r = new AdultReader(user_name, s2, s3, s4, s5);
                 readerRepository.addReader(r);
+                reader = r;
             } else {
                 System.out.println("Introduceti telefonul unui parinte:");
                 String s5 = scanner.nextLine();

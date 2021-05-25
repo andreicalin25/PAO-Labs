@@ -9,7 +9,6 @@ public abstract class Reader {
     protected Integer age;
     protected String phone_number;
     protected String email_address;
-    protected ArrayList<Book> borrowed_books;
 
     abstract public Boolean isUnderAged();
 
@@ -18,15 +17,6 @@ public abstract class Reader {
         this.age = age;
         this.phone_number = phone_number;
         this.email_address = email_address;
-        this.borrowed_books = new ArrayList<Book>();
-    }
-
-    public Reader(String name, Integer age, String phone_number, String email_address, ArrayList<Book> borrowed_books) {
-        this.name = name;
-        this.age = age;
-        this.phone_number = phone_number;
-        this.email_address = email_address;
-        this.borrowed_books = borrowed_books;
     }
 
     public String getName() {
@@ -59,28 +49,6 @@ public abstract class Reader {
 
     public void setEmail_address(String email_address) {
         this.email_address = email_address;
-    }
-
-    public ArrayList<Book> getBorrowed_books() {
-        ArrayList<Book> books_info = new ArrayList<Book>();
-
-        for(Book b : borrowed_books) {
-            books_info.add(b);
-        }
-
-        return books_info;
-    }
-
-    public void setBorrowed_books(ArrayList<Book> borrowed_books) {
-        this.borrowed_books = borrowed_books;
-    }
-
-    public void borrowBook(Book b) {
-        borrowed_books.add(b);
-    }
-
-    public void returnBook(Book b) {
-        borrowed_books.remove(b);
     }
 
     public abstract String toWrite();
