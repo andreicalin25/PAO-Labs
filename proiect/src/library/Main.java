@@ -58,12 +58,15 @@ public class Main {
                             "\n11 - adauga autor" +
                             "\n12 - sterge autor" +
                             "\n13 - afiseaza toti autorii" +
+                            "\n14 - modifica numele unui autor" +
                             "\n21 - adauga sectiune" +
                             "\n22 - sterge sectiune" +
                             "\n23 - afiseaza toate sectiunile in mare" +
                             "\n24 - afiseaza toate cartile unei sectiuni in detaliu" +
+                            "\n25 - modifica numele unei sectiuni" +
                             "\n31 - adauga carte" +
                             "\n32 - sterge carte" +
+                            "\n4 - sterge utilizator" +
                             "\n0 - log out");
 
                     o2 = scanner.nextInt();
@@ -79,6 +82,10 @@ public class Main {
                         }
                         case 13: {
                             user_operations.showAuthors(authorRepository);
+                            break;
+                        }
+                        case 14: {
+                            user_operations.updateAuthor(authorRepository, scanner);
                             break;
                         }
                         case 21: {
@@ -97,12 +104,20 @@ public class Main {
                             user_operations.showSectionBooks(sectionRepository, scanner);
                             break;
                         }
+                        case 25: {
+                            user_operations.updateSection(sectionRepository, scanner);
+                            break;
+                        }
                         case 31: {
                             user_operations.addBook(bookRepository, sectionRepository, authorRepository, scanner);
                             break;
                         }
                         case 32: {
                             user_operations.deleteBook(bookRepository, scanner);
+                            break;
+                        }
+                        case 4: {
+                            user_operations.deleteReader(readerRepository, scanner);
                             break;
                         }
                         default:

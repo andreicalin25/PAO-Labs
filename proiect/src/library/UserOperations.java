@@ -46,7 +46,22 @@ public class UserOperations {
         } else {
             authorRepository.deleteAuthor(a);
         }
- }
+    }
+
+    public void updateAuthor(AuthorRepository authorRepository, Scanner scanner) {
+        scanner.nextLine();
+        System.out.println("Cum se numeste autorul?");
+        String s1 = scanner.nextLine();
+        Author a = authorRepository.getAuthorByName(s1);
+
+        if (Objects.isNull(a)) {
+            System.out.println("Nu am gasit acest autor");
+        } else {
+            System.out.println("Care este noul nume?");
+            String s2 = scanner.nextLine();
+            authorRepository.updateAuthorName(s2, a);
+        }
+    }
 
     public void showAuthors(AuthorRepository authorRepository) {
         authorRepository.displayAuthors();
@@ -71,6 +86,21 @@ public class UserOperations {
             sectionRepository.deleteSection(s);
         }
    }
+
+    public void updateSection(SectionRepository sectionRepository, Scanner scanner) {
+        scanner.nextLine();
+        System.out.println("Cum se numeste sectiunea?");
+        String s1 = scanner.nextLine();
+        Section s = sectionRepository.getSectionByName(s1);
+
+        if (Objects.isNull(s)) {
+            System.out.println("Nu am gasit aceasta sectiune");
+        } else {
+            System.out.println("Care este noul nume?");
+            String s2 = scanner.nextLine();
+            sectionRepository.updateSectionName(s2, s);
+        }
+    }
 
     public void showSections(SectionRepository sectionRepository) {
         sectionRepository.displaySections();
@@ -193,6 +223,7 @@ public class UserOperations {
         }
     }
 
+    ///READERS
     public void showBorrowedBooks(ReaderRepository readerRepository, Reader reader) {
         readerRepository.displayReader(reader);
    }
@@ -237,4 +268,13 @@ public class UserOperations {
         }
         return reader;
     }
+
+    public void deleteReader(ReaderRepository readerRepository, Scanner scanner) {
+        System.out.println("Cum se numeste userul pe care vreti sa il stergeti?");
+        String s1 = scanner.next();
+        scanner.nextLine();
+        Reader r = readerRepository.getReaderByName(s1);
+        readerRepository.deleteReader(r);
+    }
+
 }

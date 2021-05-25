@@ -82,7 +82,7 @@ public class AuthorRepository {
                 preparedStatement2.setString(1, name);
                 preparedStatement2.setString(2, a.getName());
 
-                preparedStatement.executeUpdate();
+                preparedStatement2.executeUpdate();
             } catch (SQLException e) {
                 e.printStackTrace();
             }

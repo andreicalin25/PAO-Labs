@@ -72,7 +72,7 @@ public class SectionRepository {
                 preparedStatement2.setString(1, name);
                 preparedStatement2.setString(2, s.getName());
 
-                preparedStatement.executeUpdate();
+                preparedStatement2.executeUpdate();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
