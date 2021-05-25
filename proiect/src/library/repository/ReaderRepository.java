@@ -117,6 +117,20 @@ public class ReaderRepository {
             preparedStatement.setString(1, r.getName());
 
             preparedStatement.executeUpdate();
+
+            //Returnez cartile imprumutate de catre readerul sters
+            String borrowBookSql = "UPDATE books SET borrowed_by=? WHERE borrowed_by=?";
+
+            try {
+                PreparedStatement preparedStatement2 = connection.prepareStatement(borrowBookSql);
+                preparedStatement2.setString(1, null);
+                preparedStatement2.setString(2, r.getName());
+
+                preparedStatement2.executeUpdate();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
