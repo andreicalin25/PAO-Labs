@@ -22,31 +22,11 @@ public class Main {
 
 
     public static void main(String[] args) {
-        Reader_Writer reader_writer = new Reader_Writer();
         UserOperations user_operations = new UserOperations();
-        Library my_library = new Library();
-
-        BookRepository bookRepository = new BookRepository();
-
-//        reader_writer.readAuthors(my_library);
-//        reader_writer.readSections(my_library);
-//        reader_writer.readBooks(my_library);
-        reader_writer.readReaders(my_library, bookRepository);
-
-//        System.out.println("##### Autori #####");
-//        my_library.showAuthors();
-//        System.out.println("\n#### Sectiuni ####");
-//        my_library.showSections();
-//        System.out.println("\n#### Cititori ####");
-//        my_library.showReaders();
-
-
-
-
-        //TEST
 
         AuthorRepository authorRepository = new AuthorRepository();
         SectionRepository sectionRepository = new SectionRepository();
+        BookRepository bookRepository = new BookRepository();
         ReaderRepository readerRepository = new ReaderRepository();
 
         authorRepository.createTable();
@@ -54,27 +34,6 @@ public class Main {
         bookRepository.createTable();
         readerRepository.createTable();
 
-        Reader r = readerRepository.getReaderByName("Calin Andrei");
-        Book b = bookRepository.getBookByTitle("Avengers #1");
-        bookRepository.getBorrowed(b, r.getName());
-
-//        for (Section s : my_library.getSections()) {
-//            for(Book b : s.getBooks()) {
-//                bookRepository.addBook(b);
-//            }
-//        }
-//        for(Section s: my_library.getSections()) {
-//            sectionRepository.addSection(s);
-//        }
-//        for(Author a : my_library.getAuthors()) {
-//            authorRepository.insertAuthor(a.getName(), a.getDate_of_birth(), a.getDate_of_death());
-//        }
-
-//        authorRepository.displayAuthors();
-//        sectionRepository.displaySections();
-        bookRepository.displayBooks();
-        System.out.println("");
-        System.out.println("");
         readerRepository.displayReaders();
 
         Scanner scanner = new Scanner(System.in);
@@ -148,7 +107,7 @@ public class Main {
             } else if (o1 == 2) {
                 int o2 = 10;
 
-                Reader reader = user_operations.login(my_library, scanner);
+                Reader reader = user_operations.login(readerRepository, scanner);
 
                 System.out.println("Buna ziua " + reader.getName() + "!");
 
@@ -194,12 +153,6 @@ public class Main {
                     }
                 }
             }
-//            else {
-//                reader_writer.writeAuthors(my_library);
-//                reader_writer.writeBooks(my_library);
-//                reader_writer.writeSections(my_library);
-//                reader_writer.writeReaders(my_library);
-//            }
 
         }
 

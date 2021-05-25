@@ -24,12 +24,13 @@ public class UserOperations {
 
     /// AUTHORS
     public void addAuthor(AuthorRepository authorRepository, Scanner scanner) {
+        String blank = scanner.nextLine();
         System.out.println("Cum se numeste autorul?");
-        String s1 = scanner.next();
+        String s1 = scanner.nextLine();
         System.out.println("Pe ce data s-a nascut autorul?");
-        String s2 = scanner.next();
+        String s2 = scanner.nextLine();
         System.out.println("Pe ce data a murit autorul? (daca acesta inca traieste, se va trece 0)");
-        String s3 = scanner.next();
+        String s3 = scanner.nextLine();
 
         if (s3.equals("0")) {
             Author a = new Author(s1, s2, null);
@@ -165,6 +166,7 @@ public class UserOperations {
 
     public void borrowBook(BookRepository bookRepository, Scanner scanner, Reader reader) {
 
+        String blank = scanner.nextLine();
         System.out.println("Cum se numeste cartea pe care doriti sa o imprumutati?");
         String aux = scanner.nextLine();
         Book b = bookRepository.getBookByTitle(aux);
@@ -184,6 +186,7 @@ public class UserOperations {
 
     public void returnBook(BookRepository bookRepository , Scanner scanner, Reader reader) {
 
+        String blank = scanner.nextLine();
         System.out.println("Cum se numeste cartea pe care doriti sa o returnati?");
         String aux = scanner.nextLine();
         Book b = bookRepository.getBookByTitle(aux);
@@ -198,12 +201,12 @@ public class UserOperations {
         readerRepository.displayReader(reader);
    }
 
-    public Reader login(Library my_library, Scanner scanner) {
+    public Reader login(ReaderRepository readerRepository, Scanner scanner) {
         scanner.nextLine();
         System.out.println("Introduceti numele dumneavoastra:");
 
         String user_name = scanner.nextLine();
-        Reader reader = my_library.getReaderByName(user_name);
+        Reader reader = readerRepository.getReaderByName(user_name);
 
         if (Objects.isNull(reader)) {
             System.out.println("Nu sunteti inregistrat inca!");
@@ -223,7 +226,7 @@ public class UserOperations {
                 String s5 = scanner.nextLine();
 
                 AdultReader r = new AdultReader(user_name, s2, s3, s4, s5);
-                my_library.addReader(r);
+                readerRepository.addReader(r);
             } else {
                 System.out.println("Introduceti telefonul unui parinte:");
                 String s5 = scanner.nextLine();
@@ -231,7 +234,7 @@ public class UserOperations {
                 String s6 = scanner.nextLine();
 
                 YoungReader r = new YoungReader(user_name, s2, s3, s4, s5, s6);
-                my_library.addReader(r);
+                readerRepository.addReader(r);
                 reader = r;
             }
         }

@@ -56,6 +56,13 @@ public class AuthorRepository {
         return null;
     }
 
+    private Author mapToAuthor(ResultSet resultSet) throws SQLException {
+        if (resultSet.next()) {
+            return new Author(resultSet.getString(2), resultSet.getString(3), resultSet.getString(4));
+        }
+        return null;
+    }
+
     public void updateAuthorName(String name, Author a) {
         String updateNameSql = "UPDATE authors SET name=? WHERE name=?";
 
@@ -108,13 +115,6 @@ public class AuthorRepository {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }
-
-    private Author mapToAuthor(ResultSet resultSet) throws SQLException {
-        if (resultSet.next()) {
-            return new Author(resultSet.getString(1), resultSet.getString(2), resultSet.getString(3));
-        }
-        return null;
     }
 
     public void displayAuthors() {

@@ -64,7 +64,6 @@ public class SectionRepository {
 
             preparedStatement.executeUpdate();
 
-
             //also update section_name in Books
             String updateBooksSql = "UPDATE books SET section=? WHERE section=?";
 
@@ -110,7 +109,7 @@ public class SectionRepository {
 
     private Section mapToSection(ResultSet resultSet) throws SQLException {
         if (resultSet.next()) {
-            return new Section(resultSet.getString(1));
+            return new Section(resultSet.getString(2));
         }
         return null;
     }
@@ -120,17 +119,12 @@ public class SectionRepository {
 
         Connection connection = DatabaseConfiguration.getDatabaseConnection();
 
-        try {
-            PreparedStatement preparedStatement1 = connection.prepareStatement(selectSql);
-            preparedStatement1.setString(1, s.getName());
-            ResultSet resultSet1 = preparedStatement1.executeQuery();
-            System.out.println("Name: " + resultSet1.getString(1));
-
+            System.out.println("Name: " + s.getName());
 
             // afisare carti
             String selectBooksSql = "SELECT * FROM books WHERE section=?";
             try {
-                PreparedStatement preparedStatement2 = connection.prepareStatement(selectSql);
+                PreparedStatement preparedStatement2 = connection.prepareStatement(selectBooksSql);
                 preparedStatement2.setString(1, s.getName());
                 ResultSet resultSet2 = preparedStatement2.executeQuery();
                 while (resultSet2.next()) {
@@ -139,14 +133,12 @@ public class SectionRepository {
                     System.out.println("Author: " + resultSet2.getString(4));
                     System.out.println("Number of pages: " + resultSet2.getString(6));
                     System.out.println("Year of publication: " + resultSet2.getString(7));
+                    System.out.println("");
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
             }
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
 
     public void displaySections() {
@@ -158,7 +150,7 @@ public class SectionRepository {
             Statement stmt = connection.createStatement();
             ResultSet resultSet = stmt.executeQuery(selectSql);
             while (resultSet.next()) {
-                System.out.println(", Name: " + resultSet.getString(2));
+                System.out.println("Name: " + resultSet.getString(2));
 
                 // Afisare titluri
                 String selectBooksSql = "SELECT * FROM books WHERE section=?";
@@ -167,7 +159,7 @@ public class SectionRepository {
                     preparedStatement2.setString(1, resultSet.getString(2));
                     ResultSet resultSet2 = preparedStatement2.executeQuery();
                     while (resultSet2.next()) {
-                        System.out.println("Title: " + resultSet2.getString(2));
+                        System.out.println(" - " + resultSet2.getString(2));
                     }
                 } catch (SQLException e) {
                     e.printStackTrace();
