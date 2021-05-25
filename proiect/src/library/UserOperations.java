@@ -166,16 +166,17 @@ public class UserOperations {
         String aux = scanner.nextLine();
         Book b = bookRepository.getBookByTitle(aux);
         if (Objects.isNull(b)) {
-                System.out.println("Nu am gasit aceasta carte");
+            System.out.println("Nu am gasit aceasta carte");
+        } else if (bookRepository.isBorrowed(b)==Boolean.TRUE) {
+            System.out.println("Cartea a fost deja imprumutata de altcineva");
+        } else {
+            if (reader.isUnderAged() && b.getExplicit_content()) {
+                System.out.println("Un cititor tanar nu poate imprumuta aceasta carte!");
             }
-        else {
-                if (reader.isUnderAged() && b.getExplicit_content()) {
-                    System.out.println("Un cititor tanar nu poate imprumuta aceasta carte!");
-                }
-                else {
-                    bookRepository.getBorrowed(b, reader.getName());
-                }
+            else {
+                bookRepository.getBorrowed(b, reader.getName());
             }
+        }
 
    }
 

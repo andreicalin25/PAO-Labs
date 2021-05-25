@@ -32,13 +32,20 @@ public class Main {
         bookRepository.createTable();
         readerRepository.createTable();
 
+        System.out.println("###### Authors ######");
+        authorRepository.displayAuthors();
+        System.out.println("###### Sections ######");
+        sectionRepository.displaySections();
+        System.out.println("###### Books ######");
+        bookRepository.displayBooks();
+        System.out.println("###### Readers ######");
         readerRepository.displayReaders();
 
         Scanner scanner = new Scanner(System.in);
         int o1 = 10;
 
         while (o1 != 0) {
-            System.out.println("Bine ai venit in biblioteca noastra!\nVa rugam sa selectati una din cele trei optiuni:\n1 - admin\n2 - user\n0 - iesi");
+            System.out.println("Bine ati venit in biblioteca noastra!\nVa rugam sa selectati una din cele trei optiuni:\n1 - admin\n2 - user\n0 - iesi");
 
             o1 = scanner.nextInt();
 

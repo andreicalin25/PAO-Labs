@@ -204,6 +204,27 @@ public class BookRepository {
         }
     }
 
+    public Boolean isBorrowed(Book b) {
+        String selectSql = "SELECT * FROM books WHERE title=? AND borrowed_by IS NOT NULL";
+
+        Connection connection = DatabaseConfiguration.getDatabaseConnection();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(selectSql);
+            preparedStatement.setString(1, b.getTitle());
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if(resultSet.next()) {
+                return Boolean.TRUE;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return Boolean.FALSE;
+    }
+
     public void getBorrowed(Book b, String name) {
         String borrowBookSql = "UPDATE books SET borrowed_by=? WHERE title=?";
 
